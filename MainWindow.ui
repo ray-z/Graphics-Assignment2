@@ -322,16 +322,6 @@ color: rgb(0, 0, 255);</string>
         <height>537</height>
        </rect>
       </property>
-      <widget class="QGraphicsView" name="graphicsView">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>581</width>
-         <height>521</height>
-        </rect>
-       </property>
-      </widget>
      </widget>
     </widget>
    </item>
