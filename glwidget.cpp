@@ -107,7 +107,6 @@ void GLWidget::paintGL()
 
    // glCallList( object );   no display list this version just make the cube
     makeDice();
-    makeGround();
 }
 
 /* 2D */
@@ -258,38 +257,6 @@ void GLWidget::drawFace( int tim, float w)
     glEnd();
 
 }
-
-void GLWidget::makeGround()
-{
-    //glPushMatrix();
-    glRotatef( 90.0, 1.0, 0.0, 0.0 );
-    glLineWidth(1);
-    glBegin( GL_POLYGON );
-
-    for(int i = 0; i < 3; i++)
-    {
-        glVertex2f(1*cos(i*2*M_PI/3),
-                   1*sin(i*2*M_PI/3));
-    }
-    glEnd();
-
-    glLineWidth(2);
-    glColor3f(0, 1, 0);
-
-    glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 3; i++)
-    {
-        glVertex2f(1*cos(i*2*M_PI/3),
-                   1*sin(i*2*M_PI/3));
-    }
-
-
-    glEnd();
-    //glPopMatrix();
-
-
-}
-
 
 void GLWidget::makeSpots(int tim, QImage *buf)
 {

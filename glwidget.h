@@ -88,10 +88,6 @@ private:
     // Store mouse x, y positions when click
     int mouseX;
     int mouseY;
-
-    // Draw grid ground
-    void makeGround();
-
 };
 
 
