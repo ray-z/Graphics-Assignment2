@@ -14,12 +14,29 @@ GLubyte indices[] = {0,1,1,2,2,3,3,0};
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(parent)
 {
+    initViewPointsList();
     startup();
 }
 
 GLWidget::~GLWidget()
 {    
 
+}
+
+void GLWidget::initViewPointsList()
+{
+    addViewPoint(0, 0, 0); // cube centre
+    addViewPoint(0, 0, halfLength); // front centre
+    addViewPoint(0, halfLength, 0); // top centre
+    addViewPoint(halfLength, 0, 0); // right centre
+    addViewPoint(halfLength, halfLength, halfLength); // front  top right vertex
+}
+
+void GLWidget::addViewPoint(double x, double y, double z)
+{
+    QList<double> viewPoint;
+    viewPoint << x << y << z;
+    viewPoints.append(viewPoint);
 }
 
 void GLWidget::startup()
@@ -106,6 +123,7 @@ void GLWidget::paintGL()
     glRotatef( zangle, 0.0, 0.0, 1.0 );
 
    // glCallList( object );   no display list this version just make the cube
+    drawGround();
     makeDice();
 }
 
@@ -189,7 +207,7 @@ GLuint GLWidget::makeDice( )
 
 
     GLuint list;
-    float w = 0.8;
+    float w = halfLength;
 
   //  list = glGenLists( 1 );
  //   glNewList( list, GL_COMPILE );   no display list this version
@@ -254,6 +272,24 @@ void GLWidget::drawFace( int tim, float w)
     //glTexCoord2f(1.0, 0.0);
     glVertex3f(  -w,   w, w );
 
+    glEnd();
+
+}
+
+void GLWidget::drawGround()
+{
+
+    glRotatef( 90.0, 1.0, 0.0, 0.0 );
+
+    glLineWidth(1);
+    glColor3f(0, 1, 0);
+
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 2; i++)
+    {
+        glVertex2f(1*cos(i*2*M_PI/2),
+                   1*sin(i*2*M_PI/2));
+    }
     glEnd();
 
 }
@@ -382,14 +418,24 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
     if(e->buttons()==Qt::LeftButton)
     {
         mouseX = e->pos().x();
+        mouseY = e->pos().y();
     }
     else if(e->buttons()==Qt::RightButton)
     {
         mouseY = e->pos().y();
+        cameraToPoint.clear();
+        cameraToPoint.append(xfrom - xto);
+        cameraToPoint.append(yfrom - yto);
+        cameraToPoint.append(zfrom - zto);
     }
     else if(e->buttons()==Qt::MiddleButton)
     {
-        qDebug() << "hello";
+
+        xto = viewPoints.at(0).at(0);
+        yto = viewPoints.at(0).at(1);
+        zto = viewPoints.at(0).at(2);
+        viewPoints.pop_front();
+        viewPoints.append(viewPoints.at(0));
     }
     updateGL();
 }
@@ -405,21 +451,39 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
     if(e->buttons()==Qt::LeftButton)
     {
         int diffX = e->pos().x() - mouseX;
+        int diffY = e->pos().y() - mouseY;
+        xfrom += diffX * 0.01;
+        yfrom += diffY * 0.01;
+
+        mouseX = e->pos().x();
+        mouseY = e->pos().y();
+
+        /*
+        int diffX = e->pos().x() - mouseX;
         if(diffX/unitLength != 0)
         {
             //qDebug() << diffX/unitLength;
             setxFrom(xfrom + diffX/unitLength);
             mouseX = e->pos().x();
         }
-    }
-    else if(e->buttons()==Qt::RightButton)
-    {
+
         int diffY = e->pos().y() - mouseY;
         if(diffY/unitLength != 0)
         {
             setyFrom(yfrom + diffY/unitLength);
             mouseY = e->pos().y();
         }
+        */
+    }
+    else if(e->buttons()==Qt::RightButton)
+    {
+        int diffY = e->pos().y() - mouseY;
+
+        xfrom -= cameraToPoint.at(0) * 0.01 * diffY;
+        yfrom -= cameraToPoint.at(1) * 0.01 * diffY;
+        zfrom -= cameraToPoint.at(2) * 0.01 * diffY;
+        mouseY = e->pos().y();
+
     }
     updateGL();
 }

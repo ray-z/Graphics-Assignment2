@@ -14,12 +14,12 @@
 #include <QtOpenGL>
 #include <GL/glu.h>
 #include "version.h"
-
+#include <QList>
 
 const int maxw=1024;
 const int maxh=1024;
-const int unitLength=20;    // store unit length of grid
-
+const int unitLength=20;    // store unit length of mouse move
+const double halfLength=0.8;    // half length of cube sides
 //This is our OpenGL Component we built it on top of QGLWidget
 class GLWidget : public QGLWidget
 {
@@ -88,6 +88,18 @@ private:
     // Store mouse x, y positions when click
     int mouseX;
     int mouseY;
+
+    // Draw grid ground
+    void drawGround();
+
+    // A list of 'View to' point
+    QList<QList<double> > viewPoints;
+    void initViewPointsList();
+    void addViewPoint(double x, double y, double z);
+
+    // Store camera to view point vector
+    QList<double> cameraToPoint;
+
 };
 
 
