@@ -58,6 +58,10 @@ void GLWidget::startup()
     xfrom=yfrom=zfrom=5.0;
     xto=yto=zto=0.0;
     filled=false;
+
+    angle = M_PI/4.0;
+    elevation = M_PI/4.0;
+    radius = 10.0;
 }
 
 void GLWidget::clear()
@@ -460,6 +464,9 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
     {
         mouseX = e->pos().x();
         mouseY = e->pos().y();
+
+        // get current radius
+        radius = sqrt(pow(xfrom, 2.0) + pow(yfrom, 2.0) + pow(zfrom, 2.0));
     }
     else if(e->buttons()==Qt::RightButton)
     {
@@ -499,8 +506,16 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
         // up-down controls elevation
         int diffX = e->pos().x() - mouseX;
         int diffY = e->pos().y() - mouseY;
-        xfrom += diffX * mouseSpeed;
-        yfrom += diffY * mouseSpeed;
+        angle += diffX * mouseSpeed;
+        elevation += diffY * mouseSpeed;
+
+        QList<double> cameraP = getCameraPosition();
+        xfrom = cameraP.at(0);
+        yfrom = cameraP.at(1);
+        zfrom = cameraP.at(2);
+
+        //xfrom += diffX * mouseSpeed;
+        //yfrom += diffY * mouseSpeed;
 
         mouseX = e->pos().x();
         mouseY = e->pos().y();
@@ -515,6 +530,7 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
         xfrom -= cameraToPoint.at(0) * mouseSpeed * diffY;
         yfrom -= cameraToPoint.at(1) * mouseSpeed * diffY;
         zfrom -= cameraToPoint.at(2) * mouseSpeed * diffY;
+
         mouseY = e->pos().y();
     }
     updateGL();
@@ -526,3 +542,16 @@ void GLWidget::setFilled(bool a)
     filled=a;
     updateGL();
 }
+
+QList<double> GLWidget::getCameraPosition()
+{
+    QList<double> cameraP;
+    double r = radius * cos(elevation);
+    cameraP.clear();
+    cameraP.append(r * cos(angle));
+    cameraP.append(radius * sin(elevation));
+    cameraP.append(r * sin(angle));
+
+    return cameraP;
+}
+

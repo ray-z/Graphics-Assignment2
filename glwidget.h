@@ -20,7 +20,7 @@ const int maxw=1024;
 const int maxh=1024;
 const int unitLength=20;    // store unit length of mouse move
 const double halfLength=0.8;    // half length of cube sides
-const double mouseSpeed=0.02;
+const double mouseSpeed=0.01;
 //This is our OpenGL Component we built it on top of QGLWidget
 class GLWidget : public QGLWidget
 {
@@ -102,6 +102,15 @@ private:
 
     // Store camera position to view point vector
     QList<double> cameraToPoint;
+
+    // Store angle and elevation
+    double angle;
+    double elevation;
+
+    // Store radius
+    double radius;
+
+    QList<double> getCameraPosition();
 
 };
 
