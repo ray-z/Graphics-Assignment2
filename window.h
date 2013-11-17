@@ -42,6 +42,9 @@ private slots:
     void zFrom(int);
     void filledOn(bool);
 
+    // move camera to a specific coordinate
+    void moveCamera();
+
 protected:
     void resizeEvent(QResizeEvent * );
 };

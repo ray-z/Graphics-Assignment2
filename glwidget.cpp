@@ -26,11 +26,16 @@ GLWidget::~GLWidget()
 void GLWidget::initViewPointsList()
 {
     // TODO: add some more view points
-    addViewPoint(0, 0, 0); // cube centre
+
     addViewPoint(0, 0, halfLength); // front centre
-    addViewPoint(0, halfLength, 0); // top centre
     addViewPoint(halfLength, 0, 0); // right centre
-    addViewPoint(halfLength, halfLength, halfLength); // front  top right vertex
+    addViewPoint(0, 0, -halfLength); // back centre
+    addViewPoint(-halfLength, 0, 0); // left centre
+    addViewPoint(0, halfLength, 0); // top centre
+    addViewPoint(0, -halfLength, 0); // buttom centre
+
+    addViewPoint(halfLength, halfLength, halfLength); // front top-right vertex
+    addViewPoint(0, 0, 0); // cube centre
 }
 
 void GLWidget::addViewPoint(double x, double y, double z)
@@ -97,10 +102,11 @@ void GLWidget::initializeGL()
     */
 
     // Set up various other stuff
-    glClearColor( 0.5, 1.0, 0.75, 0.0 ); // Let OpenGL clear to black
+    glClearColor( 0.6, 0.6, 0.6, 0.0 ); // Let OpenGL clear to black
     glEnable( GL_CULL_FACE );  	// don't need Z testing for convex objects
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-
+    //glEnable(GL_COLOR_MATERIAL);
+    initLight();
     // No display list in this simple version
     //object = makeDice( );	// Generate an OpenGL display list
 }
@@ -127,9 +133,7 @@ void GLWidget::paintGL()
    // glTranslatef( 0.0, 0.0, -10.0 );
    // glScalef( scale, scale, scale );
 
-    glRotatef( xangle, 1.0, 0.0, 0.0 );
-    glRotatef( yangle, 0.0, 1.0, 0.0 );
-    glRotatef( zangle, 0.0, 0.0, 1.0 );
+
 
    // glCallList( object );   no display list this version just make the cube
     drawGround();
@@ -225,6 +229,10 @@ GLuint GLWidget::makeDice( )
   //  list = glGenLists( 1 );
  //   glNewList( list, GL_COMPILE );   no display list this version
 
+    // Rotation
+    glRotatef( xangle, 1.0, 0.0, 0.0 );
+    glRotatef( yangle, 0.0, 1.0, 0.0 );
+    glRotatef( zangle, 0.0, 0.0, 1.0 );
 
     // one
     drawFace(0,  w);
@@ -276,7 +284,7 @@ void GLWidget::drawFace( int tim, float w)
     if (filled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
     //glTexCoord2f(0.0, 0.0);
 
-    glColor3f(1, 0, 0);
+    glColor3f(1.0, 0.0, 0.0);
     glVertex3f(  -w,  -w, w );
    // glTexCoord2f(0.0, 1.0);
     glVertex3f(   w,  -w, w );
@@ -292,11 +300,10 @@ void GLWidget::drawFace( int tim, float w)
 void GLWidget::drawGround()
 {
 
-    //glLineWidth(1);
-    //glColor3f(0, 1.0, 0);
-
     // Draw axis
-    glLineWidth(2);
+    glLineWidth(3);
+    glColor3f(0.0, 0.0, 0.0);
+
     glBegin(GL_LINES);
     // X axis
     glVertex3f(0.0, 0.0, 0.0);
@@ -311,6 +318,7 @@ void GLWidget::drawGround()
 
     // Draw ground
     glLineWidth(1);
+    glColor3f(1.0, 1.0, 1.0);
     glBegin(GL_LINE_LOOP);
     glVertex3f(-10.0, 0.0, -10.0);
     glVertex3f(10.0, 0.0, -10.0);
@@ -492,8 +500,8 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
     {
         int diffX = e->pos().x() - mouseX;
         int diffY = e->pos().y() - mouseY;
-        xfrom += diffX * 0.01;
-        yfrom += diffY * 0.01;
+        xfrom += diffX * mouseSpeed;
+        yfrom += diffY * mouseSpeed;
 
         mouseX = e->pos().x();
         mouseY = e->pos().y();
@@ -519,9 +527,9 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
     {
         int diffY = e->pos().y() - mouseY;
 
-        xfrom -= cameraToPoint.at(0) * 0.01 * diffY;
-        yfrom -= cameraToPoint.at(1) * 0.01 * diffY;
-        zfrom -= cameraToPoint.at(2) * 0.01 * diffY;
+        xfrom -= cameraToPoint.at(0) * mouseSpeed * diffY;
+        yfrom -= cameraToPoint.at(1) * mouseSpeed * diffY;
+        zfrom -= cameraToPoint.at(2) * mouseSpeed * diffY;
         mouseY = e->pos().y();
 
     }
