@@ -54,9 +54,11 @@ protected:
     //its attached GLWidget
     void resizeGL(int width, int height);
     //Handle mouse
-        void mousePressEvent(QMouseEvent *event);
-        void mouseReleaseEvent(QMouseEvent *event);
-        void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    // Draw ground
+    //void paintEvent(QPaintEvent *);
 
 private:
     void startup();

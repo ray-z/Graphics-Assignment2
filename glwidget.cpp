@@ -25,6 +25,7 @@ GLWidget::~GLWidget()
 
 void GLWidget::initViewPointsList()
 {
+    // TODO: add some more view points
     addViewPoint(0, 0, 0); // cube centre
     addViewPoint(0, 0, halfLength); // front centre
     addViewPoint(0, halfLength, 0); // top centre
@@ -109,6 +110,14 @@ void GLWidget::redraw()
     updateGL();
 }
 
+/*
+void GLWidget::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+
+    painter.drawLine(10, 10, 100, 100);
+}
+*/
 void GLWidget::paintGL()
 {
     glClear( GL_COLOR_BUFFER_BIT );
@@ -136,6 +145,10 @@ void GLWidget::resizeGL( int w, int h )
     glFrustum( -1.0, 1.0, -1.0, 1.0, 5.0, 1500.0 );
     glMatrixMode( GL_MODELVIEW );
 }
+
+
+
+
 
 void GLWidget::about()
 {
@@ -259,7 +272,7 @@ void GLWidget::drawFace( int tim, float w)
     // this version no texturing
  //   glTexImage2D( GL_TEXTURE_2D, 0, 3, tex[tim].width(), tex[tim].height(), 0,
            //       GL_RGBA, GL_UNSIGNED_BYTE, tex[tim].bits() );
-
+    glLineWidth(2);
     if (filled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
     //glTexCoord2f(0.0, 0.0);
 
@@ -279,18 +292,45 @@ void GLWidget::drawFace( int tim, float w)
 void GLWidget::drawGround()
 {
 
-    glRotatef( 90.0, 1.0, 0.0, 0.0 );
+    //glLineWidth(1);
+    //glColor3f(0, 1.0, 0);
 
+    // Draw axis
+    glLineWidth(2);
+    glBegin(GL_LINES);
+    // X axis
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(5.0, 0.0, 0.0);
+    // Y axis
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 5.0, 0.0);
+    // Z axis
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 5.0);
+    glEnd();
+
+    // Draw ground
     glLineWidth(1);
-    glColor3f(0, 1, 0);
-
     glBegin(GL_LINE_LOOP);
-    for (int i = 0; i < 2; i++)
+    glVertex3f(-10.0, 0.0, -10.0);
+    glVertex3f(10.0, 0.0, -10.0);
+    glVertex3f(10.0, 0.0, 10.0);
+    glVertex3f(-10.0, 0.0, 10.0);
+    glEnd();
+
+    // Draw grid
+    glBegin(GL_LINES);
+    for(double i=-10; i<10; i+=0.5)
     {
-        glVertex2f(1*cos(i*2*M_PI/2),
-                   1*sin(i*2*M_PI/2));
+        // x
+        glVertex3f(-10.0, 0.0, i);
+        glVertex3f(10.0, 0.0, i);
+        // z
+        glVertex3f(i, 0.0, -10.0);
+        glVertex3f(i, 0.0, 10.0);
     }
     glEnd();
+
 
 }
 
