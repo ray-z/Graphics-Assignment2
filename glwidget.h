@@ -100,7 +100,7 @@ private:
     void initViewPointsList();
     void addViewPoint(double x, double y, double z);
 
-    // Store camera to view point vector
+    // Store camera position to view point vector
     QList<double> cameraToPoint;
 
 };

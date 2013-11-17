@@ -150,10 +150,6 @@ void GLWidget::resizeGL( int w, int h )
     glMatrixMode( GL_MODELVIEW );
 }
 
-
-
-
-
 void GLWidget::about()
 {
     QString vnum;
@@ -185,37 +181,37 @@ void GLWidget::help()
 
 void GLWidget::initLight()
 {
-   GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-   GLfloat mat_shininess[] = { 128.0 };
-   //   GLfloat light_position[] = { 0.3, 0.3, 0.8, 0.0 };
-   GLfloat light_position[] = { 0.2, 0.2, 0.9, 0.0 };
-   GLfloat light_ambient[] = { 0.05, 0.05, 0.05, 1.0 };
-//   GLfloat light_specular[] = { 0.1, 0.1, 0.1, 1.0 };
-   GLfloat light_specular[] = { 0.99, 0.99, 0.99, 1.0 };
-   GLfloat light_diffuse[] = { 0.7, 0.7, 0.7, 1.0 };
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = { 128.0 };
+    // GLfloat light_position[] = { 0.3, 0.3, 0.8, 0.0 };
+    GLfloat light_position[] = { 0.2, 0.2, 0.9, 0.0 };
+    GLfloat light_ambient[] = { 0.05, 0.05, 0.05, 1.0 };
+    // GLfloat light_specular[] = { 0.1, 0.1, 0.1, 1.0 };
+    GLfloat light_specular[] = { 0.99, 0.99, 0.99, 1.0 };
+    GLfloat light_diffuse[] = { 0.7, 0.7, 0.7, 1.0 };
 
-//   glClearColor(1.0, 1.0, 0.9, 1.0);
+    // glClearColor(1.0, 1.0, 0.9, 1.0);
      glShadeModel (GL_SMOOTH);
-   //   glShadeModel (GL_FLAT);
+    // glShadeModel (GL_FLAT);
 
-// MATERIAL
-   glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+    // MATERIAL
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
-// LIGHT0
-   glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-   glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+    // LIGHT0
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
 
-   glColorMaterial(GL_FRONT, GL_DIFFUSE);
-   glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_DIFFUSE);
+    glEnable(GL_COLOR_MATERIAL);
 
-   glEnable(GL_LIGHTING);
-   glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
 
-   //   glEnable(GL_DEPTH_TEST);
-   //   glDisable(GL_LIGHTING);
+    // glEnable(GL_DEPTH_TEST);
+    // glDisable(GL_LIGHTING);
 
 }
 
@@ -226,8 +222,8 @@ GLuint GLWidget::makeDice( )
     GLuint list;
     float w = halfLength;
 
-  //  list = glGenLists( 1 );
- //   glNewList( list, GL_COMPILE );   no display list this version
+    // list = glGenLists( 1 );
+    // glNewList( list, GL_COMPILE );   no display list this version
 
     // Rotation
     glRotatef( xangle, 1.0, 0.0, 0.0 );
@@ -267,8 +263,6 @@ GLuint GLWidget::makeDice( )
     drawFace(4, w);
     glPopMatrix();
 
-
-
   //  glEndList();
 
   //  return list;
@@ -299,7 +293,6 @@ void GLWidget::drawFace( int tim, float w)
 
 void GLWidget::drawGround()
 {
-
     // Draw axis
     glLineWidth(3);
     glColor3f(0.0, 0.0, 0.0);
@@ -406,34 +399,34 @@ void GLWidget::makeSpots(int tim, QImage *buf)
 
 void GLWidget::drawCircle(int radius, int xcen, int ycen,  QImage *buf)
 {
-  int i,j,r2;
+    int i,j,r2;
 
-  r2=radius*radius;
+    r2=radius*radius;
 
-  for(i=xcen-radius; i<xcen+radius; i++)
+    for(i=xcen-radius; i<xcen+radius; i++)
     for(j=ycen-radius; j<ycen+radius; j++) {
       if  ( (i-xcen)*(i-xcen) + (j-ycen)*(j-ycen) < r2)
         buf->setPixel(i,j,qRgb(255, 255, 255));
-   }
+    }
 }
 
 // communication with the window widget
 void GLWidget::rotx(int a)
 {
-        xangle =  (double)a;
-//	std::cerr << " x angle "<<xangle<<"\n";
-        updateGL();
+    xangle =  (double)a;
+    // std::cerr << " x angle "<<xangle<<"\n";
+    updateGL();
 }
 void GLWidget::roty(int a)
 {
-        yangle =  (double)a;
-        updateGL();
+    yangle =  (double)a;
+    updateGL();
 }
 
 void GLWidget::rotz(int a)
 {
-        zangle =  (double)a;
-        updateGL();
+    zangle =  (double)a;
+    updateGL();
 }
 
 
@@ -471,6 +464,8 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
     else if(e->buttons()==Qt::RightButton)
     {
         mouseY = e->pos().y();
+
+        // Store camera position to view to point vector
         cameraToPoint.clear();
         cameraToPoint.append(xfrom - xto);
         cameraToPoint.append(yfrom - yto);
@@ -478,7 +473,9 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
     }
     else if(e->buttons()==Qt::MiddleButton)
     {
-
+        // Change view point
+        // All view points are pre-defined
+        // View point is chosed by cycling through list
         xto = viewPoints.at(0).at(0);
         yto = viewPoints.at(0).at(1);
         zto = viewPoints.at(0).at(2);
@@ -498,6 +495,8 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
 {
     if(e->buttons()==Qt::LeftButton)
     {
+        // left-right controls azimuth angle and
+        // up-down controls elevation
         int diffX = e->pos().x() - mouseX;
         int diffY = e->pos().y() - mouseY;
         xfrom += diffX * mouseSpeed;
@@ -505,33 +504,18 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
 
         mouseX = e->pos().x();
         mouseY = e->pos().y();
-
-        /*
-        int diffX = e->pos().x() - mouseX;
-        if(diffX/unitLength != 0)
-        {
-            //qDebug() << diffX/unitLength;
-            setxFrom(xfrom + diffX/unitLength);
-            mouseX = e->pos().x();
-        }
-
-        int diffY = e->pos().y() - mouseY;
-        if(diffY/unitLength != 0)
-        {
-            setyFrom(yfrom + diffY/unitLength);
-            mouseY = e->pos().y();
-        }
-        */
     }
     else if(e->buttons()==Qt::RightButton)
     {
+        // control the position of the camera
+        // up to move toward view point
+        // down to move away from view point
         int diffY = e->pos().y() - mouseY;
 
         xfrom -= cameraToPoint.at(0) * mouseSpeed * diffY;
         yfrom -= cameraToPoint.at(1) * mouseSpeed * diffY;
         zfrom -= cameraToPoint.at(2) * mouseSpeed * diffY;
         mouseY = e->pos().y();
-
     }
     updateGL();
 }
