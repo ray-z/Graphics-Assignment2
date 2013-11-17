@@ -223,7 +223,7 @@ color: rgb(255, 0, 0);</string>
             <number>-99</number>
            </property>
            <property name="value">
-            <number>5</number>
+            <number>0</number>
            </property>
           </widget>
          </item>
@@ -248,7 +248,7 @@ color: rgb(0, 255, 0);</string>
             <number>-99</number>
            </property>
            <property name="value">
-            <number>5</number>
+            <number>0</number>
            </property>
           </widget>
          </item>
@@ -273,7 +273,7 @@ color: rgb(0, 0, 255);</string>
             <number>-99</number>
            </property>
            <property name="value">
-            <number>5</number>
+            <number>0</number>
            </property>
           </widget>
          </item>
