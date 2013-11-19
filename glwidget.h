@@ -44,6 +44,9 @@ public:
     void setzFrom(int a);
     void setFilled(bool a);
 
+    // Different camera view postions
+    void setTopView();
+
 protected:
     //Initialize the OpenGL Graphics Engine
     void initializeGL();
@@ -110,7 +113,20 @@ private:
     // Store radius
     double radius;
 
+    // Return a list contains current camera position
     QList<double> getCameraPosition();
+
+    /* Camera mode:
+     * 0 - Perspective View
+     * 1 - Top View
+     * 2 - Front View
+     * 3 - Right View
+     */
+    int cMode;
+
+    // up vector
+    float xup, yup, zup;
+
 
 };
 

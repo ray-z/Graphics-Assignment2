@@ -57,6 +57,9 @@ void GLWidget::startup()
     object =0; // in this version no display list
     xfrom=yfrom=zfrom=5.0;
     xto=yto=zto=0.0;
+    xup=zup=0.0;
+    yup=1.0;
+    cMode=0;
     filled=false;
 
     angle = M_PI/4.0;
@@ -133,11 +136,9 @@ void GLWidget::paintGL()
     glClear( GL_COLOR_BUFFER_BIT );
 
     glLoadIdentity();
-    gluLookAt(xfrom,yfrom,zfrom, xto, yto, zto, 0.0, 1.0, 0.0);
+    gluLookAt(xfrom,yfrom,zfrom, xto, yto, zto, xup, yup, zup);
    // glTranslatef( 0.0, 0.0, -10.0 );
    // glScalef( scale, scale, scale );
-
-
 
    // glCallList( object );   no display list this version just make the cube
     drawGround();
@@ -145,13 +146,21 @@ void GLWidget::paintGL()
 }
 
 /* 2D */
-void GLWidget::resizeGL( int w, int h )
+void GLWidget::resizeGL(int w, int h )
 {
     glViewport( 0, 0, (GLint)w, (GLint)h );
+
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    glFrustum( -1.0, 1.0, -1.0, 1.0, 5.0, 1500.0 );
+
+    if(cMode == 0)
+        glFrustum( -1.0, 1.0, -1.0, 1.0, 5.0, 1500.0 );
+    else if(cMode == 1)
+        glOrtho(-5.0f, 5.0f, -5.0f, 5.0f, 0.0f, 1500.0f);
     glMatrixMode( GL_MODELVIEW );
+    //glOrtho(w/(float)h, w/(float)h, -1.0f, 1.0f, -1.0f, 1.0f);
+    //qDebug() << "aspect: " << w/(float)h;
+
 }
 
 void GLWidget::about()
@@ -278,18 +287,19 @@ void GLWidget::drawFace( int tim, float w)
     // this version no texturing
  //   glTexImage2D( GL_TEXTURE_2D, 0, 3, tex[tim].width(), tex[tim].height(), 0,
            //       GL_RGBA, GL_UNSIGNED_BYTE, tex[tim].bits() );
+    glOrtho(1.15, 1.15, -1.0f, 1.0f, -1.0f, 1.0f);
     glLineWidth(2);
     if (filled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
     //glTexCoord2f(0.0, 0.0);
 
     glColor3f(1.0, 0.0, 0.0);
-    glVertex3f(  -w,  -w, w );
+    glVertex3f(-w, -w, w );
    // glTexCoord2f(0.0, 1.0);
-    glVertex3f(   w,  -w, w );
+    glVertex3f(w, -w, w );
     //glTexCoord2f(1.0, 1.0);
-    glVertex3f(   w,   w, w );
+    glVertex3f(w, w, w );
     //glTexCoord2f(1.0, 0.0);
-    glVertex3f(  -w,   w, w );
+    glVertex3f(-w, w, w );
 
     glEnd();
 
@@ -454,12 +464,6 @@ void GLWidget::setzFrom(int a)
 // mouse routines for camera control to be implemented
 void GLWidget::mousePressEvent( QMouseEvent *e )
 {
-
- /*   if (df->getPan()) dopan(e->x(), height()-e->y() , true);
-    else {*/
-
-    //button =  e->button();
-
     if(e->buttons()==Qt::LeftButton)
     {
         mouseX = e->pos().x();
@@ -555,3 +559,11 @@ QList<double> GLWidget::getCameraPosition()
     return cameraP;
 }
 
+void GLWidget::setTopView()
+{
+    xfrom = 1;
+    zfrom = 1;
+    if(yfrom < 0)   yfrom *= -1;
+
+    updateGL();
+}

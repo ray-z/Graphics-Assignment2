@@ -31,7 +31,6 @@ private slots:
     void clear();
     void aboutBut();
     void helpBut();
-    void pushmebut();
 
     void xrot(int);
     void yrot(int);
@@ -42,8 +41,8 @@ private slots:
     void zFrom(int);
     void filledOn(bool);
 
-    // move camera to a specific coordinate
-    void moveCamera();
+    // Different camera view postions
+    void topView();
 
 protected:
     void resizeEvent(QResizeEvent * );

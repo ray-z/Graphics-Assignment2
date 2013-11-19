@@ -6,325 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>794</width>
-    <height>603</height>
+    <width>954</width>
+    <height>629</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>OpenGl - Qt -Direct Mode Drawing</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="maximumSize">
-      <size>
-       <width>170</width>
-       <height>900</height>
-      </size>
-     </property>
-     <property name="title">
-      <string>Tool Box</string>
-     </property>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>20</y>
-        <width>113</width>
-        <height>32</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Push Me</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>61</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Rotations</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>11</x>
-        <y>300</y>
-        <width>131</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Camera Position</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>9</x>
-        <y>150</y>
-        <width>151</width>
-        <height>52</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Y</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QSlider" name="horizontalSlider_2">
-         <property name="maximum">
-          <number>360</number>
-         </property>
-         <property name="pageStep">
-          <number>1</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLCDNumber" name="lcdNumber_2">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 255, 0);</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>9</x>
-        <y>80</y>
-        <width>151</width>
-        <height>52</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_2">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>X </string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QSlider" name="horizontalSlider">
-         <property name="maximum">
-          <number>360</number>
-         </property>
-         <property name="pageStep">
-          <number>1</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLCDNumber" name="lcdNumber">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 0, 0);</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>9</x>
-        <y>220</y>
-        <width>151</width>
-        <height>52</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_3">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Z</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QSlider" name="horizontalSlider_3">
-         <property name="maximum">
-          <number>360</number>
-         </property>
-         <property name="pageStep">
-          <number>1</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLCDNumber" name="lcdNumber_3">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(0,0, 255);</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QRadioButton" name="radioButton">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>510</y>
-        <width>61</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Filled</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>330</y>
-        <width>89</width>
-        <height>119</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="styleSheet">
-            <string notr="true">font: 75 18pt &quot;Lucida Grande&quot;;
-color: rgb(255, 0, 0);</string>
-           </property>
-           <property name="text">
-            <string>X</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="spinBoxX">
-           <property name="minimum">
-            <number>-99</number>
-           </property>
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="styleSheet">
-            <string notr="true">font: 75 18pt &quot;Lucida Grande&quot;;
-color: rgb(0, 255, 0);</string>
-           </property>
-           <property name="text">
-            <string>Y</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="spinBoxY">
-           <property name="minimum">
-            <number>-99</number>
-           </property>
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="label_8">
-           <property name="styleSheet">
-            <string notr="true">font: 75 18pt &quot;Lucida Grande&quot;;
-color: rgb(0, 0, 255);</string>
-           </property>
-           <property name="text">
-            <string>Z</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="spinBoxZ">
-           <property name="minimum">
-            <number>-99</number>
-           </property>
-           <property name="value">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>460</y>
-        <width>111</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Move Camera</string>
-      </property>
-     </widget>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QScrollArea" name="glWidgetArea">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>598</width>
-        <height>537</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-   </item>
    <item row="0" column="0" colspan="2">
     <widget class="QFrame" name="frame">
      <property name="enabled">
@@ -365,6 +54,355 @@ color: rgb(0, 0, 255);</string>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QScrollArea" name="glWidgetArea">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>648</width>
+        <height>563</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="tool_box">
+     <property name="maximumSize">
+      <size>
+       <width>280</width>
+       <height>900</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Tool Box</string>
+     </property>
+     <widget class="QRadioButton" name="radioButton">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>520</y>
+        <width>61</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Filled</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>40</y>
+        <width>272</width>
+        <height>319</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="cube_rotation">
+         <property name="title">
+          <string>Cube Rotation</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>X</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Y</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_2">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Z</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_3">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+              <property name="pageStep">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+         <zorder>horizontalLayoutWidget</zorder>
+         <zorder>horizontalLayoutWidget_2</zorder>
+         <zorder>horizontalLayoutWidget_3</zorder>
+         <zorder>horizontalLayoutWidget_3</zorder>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="change_view">
+         <property name="title">
+          <string>Change View</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QRadioButton" name="radioButton_6">
+            <property name="text">
+             <string>Perspective</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_7">
+            <property name="text">
+             <string>Top</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_8">
+            <property name="text">
+             <string>Front</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_9">
+            <property name="text">
+             <string>Right</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="camera_position">
+         <property name="title">
+          <string>Camera Position</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="styleSheet">
+               <string notr="true">font: 75 18pt &quot;Lucida Grande&quot;;
+color: rgb(255, 0, 0);</string>
+              </property>
+              <property name="text">
+               <string>X</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBoxX">
+              <property name="minimum">
+               <number>-99</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="styleSheet">
+               <string notr="true">font: 75 18pt &quot;Lucida Grande&quot;;
+color: rgb(0, 255, 0);</string>
+              </property>
+              <property name="text">
+               <string>Y</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBoxY">
+              <property name="minimum">
+               <number>-99</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_8">
+              <property name="styleSheet">
+               <string notr="true">font: 75 18pt &quot;Lucida Grande&quot;;
+color: rgb(0, 0, 255);</string>
+              </property>
+              <property name="text">
+               <string>Z</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBoxZ">
+              <property name="minimum">
+               <number>-99</number>
+              </property>
+              <property name="value">
+               <number>0</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="edit_point">
+         <property name="title">
+          <string>Edit Point</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QRadioButton" name="radioButton_5">
+            <property name="acceptDrops">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Camera</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_2">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_3">
+            <property name="text">
+             <string>Move</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_4">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <zorder>radioButton</zorder>
+     <zorder>label_8</zorder>
+     <zorder>gridLayoutWidget</zorder>
     </widget>
    </item>
   </layout>
@@ -452,46 +490,14 @@ color: rgb(0, 0, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>frmMain</receiver>
-   <slot>pushmebut()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>101</x>
-     <y>104</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>190</x>
-     <y>155</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>horizontalSlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>frmMain</receiver>
-   <slot>xrot(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>32</x>
-     <y>181</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>186</x>
-     <y>256</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>horizontalSlider_2</sender>
    <signal>valueChanged(int)</signal>
    <receiver>frmMain</receiver>
    <slot>yrot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>27</x>
-     <y>251</y>
+     <x>61</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
      <x>188</x>
@@ -506,60 +512,12 @@ color: rgb(0, 0, 255);</string>
    <slot>zrot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>27</x>
-     <y>321</y>
+     <x>61</x>
+     <y>229</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
      <y>401</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>horizontalSlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>32</x>
-     <y>181</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>130</x>
-     <y>182</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>horizontalSlider_2</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_2</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>27</x>
-     <y>251</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>137</x>
-     <y>252</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>horizontalSlider_3</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>lcdNumber_3</receiver>
-   <slot>display(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>27</x>
-     <y>321</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>148</x>
-     <y>322</y>
     </hint>
    </hints>
   </connection>
@@ -570,8 +528,8 @@ color: rgb(0, 0, 255);</string>
    <slot>xFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>395</y>
+     <x>243</x>
+     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -586,8 +544,8 @@ color: rgb(0, 0, 255);</string>
    <slot>yFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>428</y>
+     <x>269</x>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -602,8 +560,8 @@ color: rgb(0, 0, 255);</string>
    <slot>zFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>476</y>
+     <x>269</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>189</x>
@@ -618,8 +576,8 @@ color: rgb(0, 0, 255);</string>
    <slot>filledOn(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>72</x>
-     <y>572</y>
+     <x>142</x>
+     <y>582</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -628,18 +586,34 @@ color: rgb(0, 0, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
    <receiver>frmMain</receiver>
-   <slot>moveCamera()</slot>
+   <slot>xrot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>526</y>
+     <x>71</x>
+     <y>147</y>
     </hint>
     <hint type="destinationlabel">
-     <x>179</x>
-     <y>535</y>
+     <x>186</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_7</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>topView()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -654,5 +628,6 @@ color: rgb(0, 0, 255);</string>
   <slot>zFrom(int)</slot>
   <slot>filledOn(bool)</slot>
   <slot>moveCamera()</slot>
+  <slot>topView()</slot>
  </slots>
 </ui>

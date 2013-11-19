@@ -48,11 +48,6 @@ void Window::helpBut()
     m_glWidget->help();
 }
 
-void Window::pushmebut()
-{
-    cerr << "pushme pushed\n";
-}
-
 void Window::xrot(int x)
 {
     m_glWidget->rotx(x);
@@ -83,15 +78,13 @@ void Window::zFrom(int a)
     m_glWidget->setzFrom(a);
 }
 
-void Window::moveCamera()
-{
-    xFrom(this->spinBoxX->value());
-    yFrom(this->spinBoxY->value());
-    zFrom(this->spinBoxZ->value());
-}
-
 void Window::filledOn(bool a)
 {
     m_glWidget->setFilled(a);
 }
 
+void Window::topView()
+{
+    m_glWidget->setTopView();
+
+}
