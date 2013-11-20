@@ -15,11 +15,12 @@
 #include <GL/glu.h>
 #include "version.h"
 #include <QList>
+#include "scene.h"
 
 const int maxw=1024;
 const int maxh=1024;
 const int unitLength=20;    // store unit length of mouse move
-const double halfLength=0.8;    // half length of cube sides
+//const double halfLength=0.8;    // half length of cube sides
 const double mouseSpeed=0.01;
 //This is our OpenGL Component we built it on top of QGLWidget
 class GLWidget : public QGLWidget
@@ -34,8 +35,8 @@ public:
     ~GLWidget();
 
     void clear();
-    void about();
-    void help();
+    //void about();
+    //void help();
     void rotx(int);
     void roty(int);
     void rotz(int);
@@ -45,7 +46,11 @@ public:
     void setFilled(bool a);
 
     // Different camera view postions
+    void setPerspectiveView();
+    void setOrthoView();
     void setTopView();
+    void setFrontView();
+    void setRightView();
 
 protected:
     //Initialize the OpenGL Graphics Engine
@@ -85,10 +90,10 @@ private:
 
     // Functions
     void redraw();
-    void makeSpots(int tim, QImage *buf);
-    void drawCircle(int radius, int xcen, int ycen,  QImage *buf);
-    void drawFace( int tim, float w);
-    GLuint makeDice( );
+    //void makeSpots(int tim, QImage *buf);
+    //void drawCircle(int radius, int xcen, int ycen,  QImage *buf);
+    //void drawFace( int tim, float w);
+    //GLuint makeDice( );
     void initLight();
 
     // Store mouse x, y positions when click
@@ -96,7 +101,7 @@ private:
     int mouseY;
 
     // Draw grid ground
-    void drawGround();
+    //void drawGround();
 
     // A list of 'View to' point
     QList<QList<double> > viewPoints;
@@ -118,15 +123,17 @@ private:
 
     /* Camera mode:
      * 0 - Perspective View
-     * 1 - Top View
-     * 2 - Front View
-     * 3 - Right View
+     * 1 - Top View: x-z
+     * 2 - Front View: x-y
+     * 3 - Right View: z-y
      */
     int cMode;
+
 
     // up vector
     float xup, yup, zup;
 
+    Scene scene;
 
 };
 

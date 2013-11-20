@@ -18,13 +18,15 @@
 Window::Window(QWidget *parent):QDialog(parent)
 {
     //We create an instance of GLWidget component we built in glwidget.h
-    m_glWidget = new GLWidget;
+    m_glWidget = new GLWidget();
+
     //Setup application interface. Creates all the required components and sliders.
     setupUi(this);
 
     //We need to attach our m_glWidget to glWidgetArea
     //All our drawings will be on glWidgetArea
     glWidgetArea->setWidget(m_glWidget);
+
 
 }
 
@@ -38,6 +40,7 @@ void Window::clear()
     m_glWidget->clear();
 }
 
+/*
 void Window::aboutBut()
 {
     m_glWidget->about();
@@ -47,6 +50,7 @@ void Window::helpBut()
 {
     m_glWidget->help();
 }
+*/
 
 void Window::xrot(int x)
 {
@@ -83,8 +87,22 @@ void Window::filledOn(bool a)
     m_glWidget->setFilled(a);
 }
 
+void Window::perspectiveView()
+{
+    m_glWidget->setPerspectiveView();
+}
+
 void Window::topView()
 {
     m_glWidget->setTopView();
+}
 
+void Window::frontView()
+{
+    m_glWidget->setFrontView();
+}
+
+void Window::rightView()
+{
+    m_glWidget->setRightView();
 }

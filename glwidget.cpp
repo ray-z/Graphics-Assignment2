@@ -26,7 +26,6 @@ GLWidget::~GLWidget()
 void GLWidget::initViewPointsList()
 {
     // TODO: add some more view points
-
     addViewPoint(0, 0, halfLength); // front centre
     addViewPoint(halfLength, 0, 0); // right centre
     addViewPoint(0, 0, -halfLength); // back centre
@@ -133,6 +132,16 @@ void GLWidget::paintEvent(QPaintEvent *)
 */
 void GLWidget::paintGL()
 {
+    /*
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+
+    if(cMode == 0)
+        glFrustum( -1.0, 1.0, -1.0, 1.0, 5.0, 1500.0 );
+    else if(cMode == 1)
+        glOrtho(-5.0f, 5.0f, -5.0f, 5.0f, 0.0f, 1500.0f);
+    glMatrixMode( GL_MODELVIEW );
+    */
     glClear( GL_COLOR_BUFFER_BIT );
 
     glLoadIdentity();
@@ -141,15 +150,18 @@ void GLWidget::paintGL()
    // glScalef( scale, scale, scale );
 
    // glCallList( object );   no display list this version just make the cube
-    drawGround();
-    makeDice();
+    //drawGround();
+    //makeDice();
+    scene.init(filled, xangle, yangle, zangle);
+    scene.draw();
 }
 
 /* 2D */
 void GLWidget::resizeGL(int w, int h )
 {
     glViewport( 0, 0, (GLint)w, (GLint)h );
-
+    setPerspectiveView();
+    /*
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
 
@@ -160,9 +172,11 @@ void GLWidget::resizeGL(int w, int h )
     glMatrixMode( GL_MODELVIEW );
     //glOrtho(w/(float)h, w/(float)h, -1.0f, 1.0f, -1.0f, 1.0f);
     //qDebug() << "aspect: " << w/(float)h;
+    */
 
 }
 
+/*
 void GLWidget::about()
 {
     QString vnum;
@@ -191,6 +205,7 @@ void GLWidget::help()
     mess = mess+notes;
     QMessageBox::information( this, title, mess, QMessageBox::Ok );
 }
+*/
 
 void GLWidget::initLight()
 {
@@ -228,6 +243,7 @@ void GLWidget::initLight()
 
 }
 
+/*
 GLuint GLWidget::makeDice( )
 {
 
@@ -348,7 +364,8 @@ void GLWidget::drawGround()
 
 
 }
-
+*/
+/*
 void GLWidget::makeSpots(int tim, QImage *buf)
 {
   int r=255, g=0, b=0;
@@ -423,7 +440,7 @@ void GLWidget::drawCircle(int radius, int xcen, int ycen,  QImage *buf)
         buf->setPixel(i,j,qRgb(255, 255, 255));
     }
 }
-
+*/
 // communication with the window widget
 void GLWidget::rotx(int a)
 {
@@ -510,6 +527,47 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
         // up-down controls elevation
         int diffX = e->pos().x() - mouseX;
         int diffY = e->pos().y() - mouseY;
+
+        switch (cMode)
+        {
+            case 0:
+            {
+                angle += diffX * mouseSpeed;
+                elevation += diffY * mouseSpeed;
+
+                QList<double> cameraP = getCameraPosition();
+                xfrom = cameraP.at(0);
+                yfrom = cameraP.at(1);
+                zfrom = cameraP.at(2);
+            }break;
+
+            case 1:
+            {
+                xfrom += diffX * mouseSpeed;
+                zfrom += diffY * mouseSpeed;
+                xto += diffX * mouseSpeed;
+                zto += diffY * mouseSpeed;
+            }break;
+
+            case 2:
+            {
+                xfrom += diffX * mouseSpeed;
+                yfrom += diffY * mouseSpeed;
+                xto += diffX * mouseSpeed;
+                yto += diffY * mouseSpeed;
+            }break;
+
+            case 3:
+            {
+                zfrom += diffX * mouseSpeed;
+                yfrom += diffY * mouseSpeed;
+                zto += diffX * mouseSpeed;
+                yto += diffY * mouseSpeed;
+            }break;
+
+        }
+
+        /*
         angle += diffX * mouseSpeed;
         elevation += diffY * mouseSpeed;
 
@@ -520,7 +578,7 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
 
         //xfrom += diffX * mouseSpeed;
         //yfrom += diffY * mouseSpeed;
-
+        */
         mouseX = e->pos().x();
         mouseY = e->pos().y();
     }
@@ -559,11 +617,66 @@ QList<double> GLWidget::getCameraPosition()
     return cameraP;
 }
 
+void GLWidget::setPerspectiveView()
+{
+    cMode = 0;
+
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    glFrustum( -1.0, 1.0, -1.0, 1.0, 5.0, 1500.0 );
+    glMatrixMode( GL_MODELVIEW );
+
+    xfrom = yfrom = zfrom = 10.0;
+    xup = zup = 0.0;
+    yup = 1.0;
+    xto = yto = zto = 0.0;
+    updateGL();
+}
+
+void GLWidget::setOrthoView()
+{
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    glOrtho(-5.0f, 5.0f, -5.0f, 5.0f, 0.0f, 1500.0f);
+    glMatrixMode( GL_MODELVIEW );
+    xto = yto = zto = 0.0;
+}
+
 void GLWidget::setTopView()
 {
-    xfrom = 1;
-    zfrom = 1;
-    if(yfrom < 0)   yfrom *= -1;
+    cMode = 1;
+
+    setOrthoView();
+    xfrom = zfrom = 0.0;
+    yfrom = 50.0;
+    xup = yup = 0.0;
+    zup = -1.0;
+
+    updateGL();
+}
+
+void GLWidget::setFrontView()
+{
+    cMode = 2;
+
+    setOrthoView();
+    xfrom = yfrom = 0.0;
+    zfrom = 50.0;
+    xup = zup = 0.0;
+    yup = 1.0;
+
+    updateGL();
+}
+
+void GLWidget::setRightView()
+{
+    cMode = 3;
+
+    setOrthoView();
+    yfrom = zfrom = 0.0;
+    xfrom = 50.0;
+    xup = zup = 0.0;
+    yup = 1.0;
 
     updateGL();
 }
