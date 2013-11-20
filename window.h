@@ -29,8 +29,8 @@ private slots:
 
     void endit(){cerr << "goodbye\n"; exit(0);};
     void clear();
-    void aboutBut();
-    void helpBut();
+    //void aboutBut();
+    //void helpBut();
 
     void xrot(int);
     void yrot(int);
@@ -42,7 +42,10 @@ private slots:
     void filledOn(bool);
 
     // Different camera view postions
+    void perspectiveView();
     void topView();
+    void frontView();
+    void rightView();
 
 protected:
     void resizeEvent(QResizeEvent * );
