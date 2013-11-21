@@ -10,12 +10,15 @@ void Scene::init(bool f, double x, double y, double z)
     xangle = x;
     yangle = y;
     zangle = z;
+
 }
 
 void Scene::draw()
 {
     drawGround();
+    drawPoints();
     makeDice();
+
 }
 
 GLuint Scene::makeDice()
@@ -134,6 +137,65 @@ void Scene::drawGround()
         glVertex3f(i, 0.0, 10.0);
     }
     glEnd();
-
-
 }
+
+void Scene::addPoint(double x, double y, double z)
+{
+    selectedPoint << x << y << z;
+    points << selectedPoint;
+    selectedPoint.clear();
+}
+
+void Scene::drawPoints()
+{
+    //glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+    glColor3f(1.0, 0.0, 0.0);
+
+    glPointSize(10.0);
+
+
+    glBegin(GL_POINTS);
+    foreach(QList<double> p, points)
+    {
+        glVertex3f(p.at(0), p.at(1), p.at(2));
+    }
+    glEnd();
+
+    if(points.length() > 3) drawSpline();
+}
+
+void Scene::drawSpline()
+{
+    int numP = points.length();
+    float xNew, yNew, zNew;   //Points on the Catmull-Rom spline
+
+    // init a list of x, y, z
+    float x[numP], y[numP], z[numP];
+    for(int l = 0; l < numP; l++)
+    {
+        x[l] = points.at(l).at(0);
+        y[l] = points.at(l).at(1);
+        z[l] = points.at(l).at(2);
+    }
+
+    glBegin(GL_LINE_STRIP);
+    for(int i = 1; i < numP-2; i++)
+    {
+        for(int k = 0;  k < 50; k++){    //50 points
+           float t = k*0.02;  //Interpolation parameter
+           xNew = x[i] + 0.5*t*(-x[i-1]+x[i+1])
+               + t*t*(x[i-1] - 2.5*x[i] + 2*x[i+1] - 0.5*x[i+2])
+               + t*t*t*(-0.5*x[i-1] + 1.5*x[i] - 1.5*x[i+1] + 0.5*x[i+2]);
+           yNew = y[i] + 0.5*t*(-y[i-1]+y[i+1])
+               + t*t*(y[i-1] - 2.5*y[i] + 2*y[i+1] - 0.5*y[i+2])
+               + t*t*t*(-0.5*y[i-1] + 1.5*y[i] - 1.5*y[i+1] + 0.5*y[i+2]);
+           zNew = z[i] + 0.5*t*(-z[i-1]+z[i+1])
+               + t*t*(z[i-1] - 2.5*z[i] + 2*z[i+1] - 0.5*z[i+2])
+               + t*t*t*(-0.5*z[i-1] + 1.5*z[i] - 1.5*z[i+1] + 0.5*z[i+2]);
+           glVertex3f(xNew, yNew, zNew);
+       }
+    }
+    glEnd();
+}
+

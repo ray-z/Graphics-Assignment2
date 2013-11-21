@@ -59,6 +59,7 @@ void GLWidget::startup()
     xup=zup=0.0;
     yup=1.0;
     cMode=0;
+    mMode=0;
     filled=false;
 
     angle = M_PI/4.0;
@@ -142,7 +143,7 @@ void GLWidget::paintGL()
         glOrtho(-5.0f, 5.0f, -5.0f, 5.0f, 0.0f, 1500.0f);
     glMatrixMode( GL_MODELVIEW );
     */
-    glClear( GL_COLOR_BUFFER_BIT );
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glLoadIdentity();
     gluLookAt(xfrom,yfrom,zfrom, xto, yto, zto, xup, yup, zup);
@@ -154,6 +155,7 @@ void GLWidget::paintGL()
     //makeDice();
     scene.init(filled, xangle, yangle, zangle);
     scene.draw();
+
 }
 
 /* 2D */
@@ -481,6 +483,7 @@ void GLWidget::setzFrom(int a)
 // mouse routines for camera control to be implemented
 void GLWidget::mousePressEvent( QMouseEvent *e )
 {
+
     if(e->buttons()==Qt::LeftButton)
     {
         mouseX = e->pos().x();
@@ -677,6 +680,17 @@ void GLWidget::setRightView()
     xfrom = 50.0;
     xup = zup = 0.0;
     yup = 1.0;
-
+    scene.addPoint(-0.5, 0.5, 1);
+    scene.addPoint(-0.5, 0.2, 0.5);
+    scene.addPoint(0, 0.5, 0);
+    scene.addPoint(0.1, 0.3, -0.5);
+    scene.addPoint(0.5, 0.5, -1);
+    scene.addPoint(0.7, 0.9, -1.3);
+    scene.addPoint(1.5, 1.2, -1);
     updateGL();
+}
+
+void GLWidget::setMouseMode(int i)
+{
+    mMode = i;
 }

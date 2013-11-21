@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1065</width>
-    <height>724</height>
+    <width>938</width>
+    <height>598</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,8 +36,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>759</width>
-        <height>704</height>
+        <width>632</width>
+        <height>578</height>
        </rect>
       </property>
      </widget>
@@ -316,7 +316,7 @@ color: rgb(0, 0, 255);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QRadioButton" name="radioButton_5">
+           <widget class="QRadioButton" name="rb_ctrlCamera">
             <property name="acceptDrops">
              <bool>false</bool>
             </property>
@@ -329,21 +329,30 @@ color: rgb(0, 0, 255);</string>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="rb_addPt">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Add</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="rb_movePt">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Move</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_4">
+           <widget class="QRadioButton" name="rb_deletePt">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Delete</string>
             </property>
@@ -358,7 +367,7 @@ color: rgb(0, 0, 255);</string>
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>620</y>
+        <y>420</y>
         <width>131</width>
         <height>61</height>
        </rect>
@@ -412,7 +421,7 @@ color: rgb(0, 0, 255);</string>
    <slot>xFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
+     <x>266</x>
      <y>108</y>
     </hint>
     <hint type="destinationlabel">
@@ -428,8 +437,8 @@ color: rgb(0, 0, 255);</string>
    <slot>yFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
-     <y>149</y>
+     <x>266</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -444,8 +453,8 @@ color: rgb(0, 0, 255);</string>
    <slot>zFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
-     <y>190</y>
+     <x>266</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
      <x>189</x>
@@ -509,7 +518,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>209</x>
-     <y>667</y>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>657</x>
@@ -525,7 +534,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>209</x>
-     <y>661</y>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>194</x>
@@ -541,7 +550,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>209</x>
-     <y>667</y>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>650</x>
@@ -597,6 +606,70 @@ color: rgb(0, 0, 255);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>rb_ctrlCamera</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>ctrlCamera()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>178</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_addPt</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>addPt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_movePt</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>movePt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_deletePt</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>deletePt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>344</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>290</x>
+     <y>383</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>pushmebut()</slot>
@@ -612,5 +685,9 @@ color: rgb(0, 0, 255);</string>
   <slot>frontView()</slot>
   <slot>rightView()</slot>
   <slot>perspectiveView()</slot>
+  <slot>ctrlCamera()</slot>
+  <slot>addPt()</slot>
+  <slot>movePt()</slot>
+  <slot>deletePt()</slot>
  </slots>
 </ui>

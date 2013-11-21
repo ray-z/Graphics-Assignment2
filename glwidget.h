@@ -47,10 +47,12 @@ public:
 
     // Different camera view postions
     void setPerspectiveView();
-    void setOrthoView();
     void setTopView();
     void setFrontView();
     void setRightView();
+
+    // Different mouse mode
+    void setMouseMode(int i);
 
 protected:
     //Initialize the OpenGL Graphics Engine
@@ -121,14 +123,25 @@ private:
     // Return a list contains current camera position
     QList<double> getCameraPosition();
 
-    /* Camera mode:
+    /* Camera Mode:
      * 0 - Perspective View
      * 1 - Top View: x-z
      * 2 - Front View: x-y
      * 3 - Right View: z-y
-     */
+    */
     int cMode;
 
+    /* Mouse Mode:
+     * 0 - Control Camera
+     * 1 - Add Point
+     * 2 - Move Point
+     * 3 - Delete Point
+    */
+
+    // Set init ortognal view
+    void setOrthoView();
+
+    int mMode;
 
     // up vector
     float xup, yup, zup;

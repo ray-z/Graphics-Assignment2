@@ -47,6 +47,17 @@ private slots:
     void frontView();
     void rightView();
 
+    // Different mouse mode
+    void ctrlCamera();
+    void addPt();
+    void movePt();
+    void deletePt();
+
+    // Reset mouse mode
+    // Only orthogonal view allows control points
+    void enablePtMode();
+    void disablePtMode();
+
 protected:
     void resizeEvent(QResizeEvent * );
 };
