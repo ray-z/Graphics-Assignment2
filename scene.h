@@ -18,13 +18,13 @@ public:
     // Make dice, draw ground and axis
     void draw();
     // Add/Select/Delete points in scene
-    void addPoint(double x, double y, double z);
-    void movePoint();
-    void deletePoint();
+    void addPoint(int cMode, double h, double v);
+    void movePoint(int cMode, int i, double h, double v);
+    void deletePoint(int i);
 
     // Check if a point is selected
-    bool isSelected(int cMode, double h, double v);
-
+    // return index of point if selected, else return -1
+    int isSelected(int cMode, double h, double v);
 
 private:
     // Draw grid ground
@@ -39,7 +39,6 @@ private:
     double xangle, yangle, zangle;
     // A list to store points
     QList<QList<double> > points;
-    QList<double> selectedPoint;
 
     void drawPoints();
     void drawSpline();

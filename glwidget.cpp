@@ -61,7 +61,7 @@ void GLWidget::startup()
     cMode=0;
     mMode=0;
     filled=false;
-
+    selectedPoint=-1;
     angle = M_PI/4.0;
     elevation = M_PI/4.0;
     radius = 10.0;
@@ -492,42 +492,34 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
         double widgetX = (mouseX - xDiff) / coordToL;
         double widgetY = (yDiff - mouseY) / coordToL;
 
+        // selectedPoint = -1;
+
         switch (mMode)
         {
         case 0: // Control Camera
         {
             // get current radius
             radius = sqrt(pow(xfrom, 2.0) + pow(yfrom, 2.0) + pow(zfrom, 2.0));
-        }
-        break;
+        } 
+            break;
         case 1: // Add point
         {
-
-            switch (cMode)
-            {
-            case 1: // Top view
-                scene.addPoint(widgetX, 0.0, -widgetY);
-                //qDebug() << mouseX << ", " << mouseY;
-                break;
-            case 2: // Front view
-                scene.addPoint(widgetX, widgetY, 0.0);
-                break;
-            case 3: // Right view
-                scene.addPoint(0.0, widgetY, -widgetX);
-                break;
-            }
-
+            scene.addPoint(cMode, widgetX, widgetY);
         }
-        break;
-        case 2: //Move Point
+            break;
+        case 2: // Move Point
         {
-            scene.isSelected(1, widgetX, -widgetY);
+            selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+            //qDebug() << "selectedPoint: " << selectedPoint;
         }
-        break;
+            break;
         case 3: // Delete Point
         {
+            selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+            if(selectedPoint != -1)
+                scene.deletePoint(selectedPoint);
         }
-        break;
+            break;
         }
 
         /*
@@ -570,7 +562,7 @@ void GLWidget::mouseReleaseEvent( QMouseEvent *e)
 
 void GLWidget::mouseMoveEvent ( QMouseEvent *e )
 {
-    if(cMode !=0) return;  // Only perspective mode is allowed to move camera
+    //if(cMode !=0) return;  // Only perspective mode is allowed to move camera
 
     if(e->buttons()==Qt::LeftButton)
     {
@@ -579,51 +571,69 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
         int diffX = e->pos().x() - mouseX;
         int diffY = e->pos().y() - mouseY;
 
+        if(cMode == 0)  // Perspective View
+        {
+            angle += diffX * mouseSpeed;
+            elevation += diffY * mouseSpeed;
+
+            QList<double> cameraP = getCameraPosition();
+            xfrom = cameraP.at(0);
+            yfrom = cameraP.at(1);
+            zfrom = cameraP.at(2);
+        }
+        else    // 2D View
+        {
+            if(mMode == 2)  // Move
+            {
+                if(selectedPoint != -1) // A point is selected
+                {
+                    scene.movePoint(cMode, selectedPoint, diffX/coordToL, diffY/coordToL);
+                }
+            }
+        }
         /*
         switch (cMode)
         {
         case 0:
-            {
-                angle += diffX * mouseSpeed;
-                elevation += diffY * mouseSpeed;
+        {
+            angle += diffX * mouseSpeed;
+            elevation += diffY * mouseSpeed;
 
-                QList<double> cameraP = getCameraPosition();
-                xfrom = cameraP.at(0);
-                yfrom = cameraP.at(1);
-                zfrom = cameraP.at(2);
-            }
+            QList<double> cameraP = getCameraPosition();
+            xfrom = cameraP.at(0);
+            yfrom = cameraP.at(1);
+            zfrom = cameraP.at(2);
+        }
             break;
-
         case 1:
-            {
-                xfrom += diffX * mouseSpeed;
-                zfrom += diffY * mouseSpeed;
-                xto += diffX * mouseSpeed;
-                zto += diffY * mouseSpeed;
-            }
-            break;
+        {
+            //selectedPoint << scene.isSelected(cMode, widgetX, widgetY);
+            qDebug() << "selectedPoint: " << selectedPoint;
+            if(selectedPoint != -1)
+                scene.movePoint(cMode, selectedPoint, diffX * mouseSpeed, diffY * mouseSpeed);
+            //xfrom += diffX * mouseSpeed;
+            //zfrom += diffY * mouseSpeed;
 
+        }
+            break;
         case 2:
-            {
-                xfrom += diffX * mouseSpeed;
-                yfrom += diffY * mouseSpeed;
-                xto += diffX * mouseSpeed;
-                yto += diffY * mouseSpeed;
-            }
-            break;
+        {
+            xfrom += diffX * mouseSpeed;
+            yfrom += diffY * mouseSpeed;
 
+        }
+            break;
         case 3:
-            {
-                zfrom += diffX * mouseSpeed;
-                yfrom += diffY * mouseSpeed;
-                zto += diffX * mouseSpeed;
-                yto += diffY * mouseSpeed;
-            }
+        {
+            zfrom += diffX * mouseSpeed;
+            yfrom += diffY * mouseSpeed;
+
+        }
             break;
 
         }
         */
-
+        /*
         angle += diffX * mouseSpeed;
         elevation += diffY * mouseSpeed;
 
@@ -631,7 +641,7 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
         xfrom = cameraP.at(0);
         yfrom = cameraP.at(1);
         zfrom = cameraP.at(2);
-
+        */
         mouseX = e->pos().x();
         mouseY = e->pos().y();
     }

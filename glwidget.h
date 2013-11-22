@@ -154,6 +154,7 @@ private:
 
     Scene scene;
 
+    int selectedPoint;
 };
 
 

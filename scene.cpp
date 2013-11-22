@@ -139,11 +139,27 @@ void Scene::drawGround()
     glEnd();
 }
 
-void Scene::addPoint(double x, double y, double z)
+void Scene::addPoint(int cMode, double h, double v)
 {
-    selectedPoint << x << y << z;
-    points << selectedPoint;
-    selectedPoint.clear();
+    /* Top view: (h, 0, -v)
+     * Front view: (h, v, 0)
+     * Right view: (0, v, -h)
+     */
+    QList<double> newPoint;
+    switch (cMode)
+    {
+    case 1:
+        newPoint << h << 0.0 << -v;
+        break;
+    case 2:
+        newPoint << h << v << 0.0;
+        break;
+    case 3:
+        newPoint << 0.0 << v << -h;
+        break;
+    }
+    points << newPoint;
+    newPoint.clear();
 }
 
 void Scene::drawPoints()
@@ -199,7 +215,7 @@ void Scene::drawSpline()
     glEnd();
 }
 
-bool Scene::isSelected(int cMode, double h, double v)
+int Scene::isSelected(int cMode, double h, double v)
 {
     switch (cMode)
     {
@@ -210,17 +226,71 @@ bool Scene::isSelected(int cMode, double h, double v)
             //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
 
             if(fabs(h - points.at(i).at(0)) < selectAccuracy &&
-                    fabs(v - points.at(i).at(2)) < selectAccuracy)
+                    fabs(-v - points.at(i).at(2)) < selectAccuracy)
             {
-                qDebug() << "a point is selected.";
-                return true;
+                return i;
             }
         }
     }
+        break;
     case 2: // Front view: x-y
-        return true;
-    case 3: // Right view: z-y
-        return true;
+    {
+        for(int i=0; i<points.length(); i++)
+        {
+            //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
+
+            if(fabs(h - points.at(i).at(0)) < selectAccuracy &&
+                    fabs(v - points.at(i).at(1)) < selectAccuracy)
+            {
+                return i;
+            }
+        }
     }
-    return false;
+        break;
+    case 3: // Right view: z-y
+    {
+        for(int i=0; i<points.length(); i++)
+        {
+            //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
+
+            if(fabs(v - points.at(i).at(1)) < selectAccuracy &&
+                    fabs(-h - points.at(i).at(2)) < selectAccuracy)
+            {
+                return i;
+            }
+        }
+    }
+        break;
+    }
+    return -1;
+}
+
+void Scene::movePoint(int cMode, int i, double h, double v)
+{
+    QList<double> selectedPoint;
+    switch (cMode)
+    {
+    case 1: // Top view: x-z (h, 0, -v)
+    {
+        selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) << points.at(i).at(2) + v;
+    }
+        break;
+    case 2: // Front view: x-y (h, v, 0)
+    {
+        selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) - v << points.at(i).at(2);
+    }
+        break;
+    case 3: // Right view: z-y (0, v, -h)
+    {
+        selectedPoint << points.at(i).at(0) << points.at(i).at(1) - v << points.at(i).at(2) - h;
+    }
+        break;
+    }
+    points.replace(i, selectedPoint);
+    selectedPoint.clear();
+}
+
+void Scene::deletePoint(int i)
+{
+    points.removeAt(i);
 }
