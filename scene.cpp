@@ -168,10 +168,10 @@ void Scene::drawPoints()
 void Scene::drawSpline()
 {
     int numP = points.length();
-    float xNew, yNew, zNew;   //Points on the Catmull-Rom spline
+    double xNew, yNew, zNew;   //Points on the Catmull-Rom spline
 
     // init a list of x, y, z
-    float x[numP], y[numP], z[numP];
+    double x[numP], y[numP], z[numP];
     for(int l = 0; l < numP; l++)
     {
         x[l] = points.at(l).at(0);
@@ -183,7 +183,7 @@ void Scene::drawSpline()
     for(int i = 1; i < numP-2; i++)
     {
         for(int k = 0;  k < 50; k++){    //50 points
-           float t = k*0.02;  //Interpolation parameter
+           double t = k*0.02;  //Interpolation parameter
            xNew = x[i] + 0.5*t*(-x[i-1]+x[i+1])
                + t*t*(x[i-1] - 2.5*x[i] + 2*x[i+1] - 0.5*x[i+2])
                + t*t*t*(-0.5*x[i-1] + 1.5*x[i] - 1.5*x[i+1] + 0.5*x[i+2]);
@@ -199,3 +199,28 @@ void Scene::drawSpline()
     glEnd();
 }
 
+bool Scene::isSelected(int cMode, double h, double v)
+{
+    switch (cMode)
+    {
+    case 1: // Top view: x-z
+    {
+        for(int i=0; i<points.length(); i++)
+        {
+            //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
+
+            if(fabs(h - points.at(i).at(0)) < selectAccuracy &&
+                    fabs(v - points.at(i).at(2)) < selectAccuracy)
+            {
+                qDebug() << "a point is selected.";
+                return true;
+            }
+        }
+    }
+    case 2: // Front view: x-y
+        return true;
+    case 3: // Right view: z-y
+        return true;
+    }
+    return false;
+}

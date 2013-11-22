@@ -3,8 +3,11 @@
 
 #include <QtOpenGL>
 #include <QList>
+#include <math.h>
 
 const double halfLength=0.8;    // half length of cube sides
+const double selectAccuracy=0.2;    // different range allowed between mouse pointer and point
+
 class Scene
 {
 public:
@@ -18,6 +21,9 @@ public:
     void addPoint(double x, double y, double z);
     void movePoint();
     void deletePoint();
+
+    // Check if a point is selected
+    bool isSelected(int cMode, double h, double v);
 
 
 private:
@@ -37,6 +43,8 @@ private:
 
     void drawPoints();
     void drawSpline();
+
+
 };
 
 #endif // SCENE_H
