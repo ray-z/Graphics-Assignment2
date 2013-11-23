@@ -42,7 +42,7 @@ private:
 
     void drawPoints();
     void drawSpline();
-
+    void drawFrame();
 
 };
 

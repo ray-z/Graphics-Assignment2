@@ -15,11 +15,10 @@ void Scene::init(bool f, double x, double y, double z)
 
 void Scene::draw()
 {
-    makeDice();
     drawGround();
     drawPoints();
     drawFrame();
-
+    makeDice();
 }
 
 GLuint Scene::makeDice()
@@ -72,9 +71,6 @@ GLuint Scene::makeDice()
   //  glEndList();
 
   //  return list;
-    glRotatef( 0, 1.0, 0.0, 0.0 );
-    glRotatef( 0, 0.0, 1.0, 0.0 );
-    glRotatef( 0, 0.0, 0.0, 1.0 );
     return 0;
 }
 
