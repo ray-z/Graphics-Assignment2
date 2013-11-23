@@ -185,7 +185,7 @@
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>510</y>
+        <y>480</y>
         <width>61</width>
         <height>20</height>
        </rect>
@@ -280,19 +280,6 @@ color: rgb(0, 0, 255);</string>
         </layout>
        </item>
       </layout>
-     </widget>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>460</y>
-        <width>111</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Move Camera</string>
-      </property>
      </widget>
     </widget>
    </item>
@@ -474,8 +461,8 @@ color: rgb(0, 0, 255);</string>
    <slot>xrot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>32</x>
-     <y>181</y>
+     <x>42</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
      <x>186</x>
@@ -490,8 +477,8 @@ color: rgb(0, 0, 255);</string>
    <slot>yrot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>27</x>
-     <y>251</y>
+     <x>37</x>
+     <y>241</y>
     </hint>
     <hint type="destinationlabel">
      <x>188</x>
@@ -506,8 +493,8 @@ color: rgb(0, 0, 255);</string>
    <slot>zrot(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>27</x>
-     <y>321</y>
+     <x>37</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -522,12 +509,12 @@ color: rgb(0, 0, 255);</string>
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>32</x>
-     <y>181</y>
+     <x>42</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
-     <x>130</x>
-     <y>182</y>
+     <x>167</x>
+     <y>179</y>
     </hint>
    </hints>
   </connection>
@@ -538,12 +525,12 @@ color: rgb(0, 0, 255);</string>
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>27</x>
-     <y>251</y>
+     <x>37</x>
+     <y>241</y>
     </hint>
     <hint type="destinationlabel">
-     <x>137</x>
-     <y>252</y>
+     <x>167</x>
+     <y>249</y>
     </hint>
    </hints>
   </connection>
@@ -554,12 +541,12 @@ color: rgb(0, 0, 255);</string>
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>27</x>
-     <y>321</y>
+     <x>37</x>
+     <y>311</y>
     </hint>
     <hint type="destinationlabel">
-     <x>148</x>
-     <y>322</y>
+     <x>167</x>
+     <y>319</y>
     </hint>
    </hints>
   </connection>
@@ -570,8 +557,8 @@ color: rgb(0, 0, 255);</string>
    <slot>xFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>395</y>
+     <x>120</x>
+     <y>414</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -586,8 +573,8 @@ color: rgb(0, 0, 255);</string>
    <slot>yFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>127</x>
-     <y>428</y>
+     <x>135</x>
+     <y>455</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -624,22 +611,6 @@ color: rgb(0, 0, 255);</string>
     <hint type="destinationlabel">
      <x>190</x>
      <y>550</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>frmMain</receiver>
-   <slot>moveCamera()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>141</x>
-     <y>526</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>179</x>
-     <y>535</y>
     </hint>
    </hints>
   </connection>

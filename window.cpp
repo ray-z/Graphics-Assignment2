@@ -83,13 +83,6 @@ void Window::zFrom(int a)
     m_glWidget->setzFrom(a);
 }
 
-void Window::moveCamera()
-{
-    xFrom(this->spinBoxX->value());
-    yFrom(this->spinBoxY->value());
-    zFrom(this->spinBoxZ->value());
-}
-
 void Window::filledOn(bool a)
 {
     m_glWidget->setFilled(a);
