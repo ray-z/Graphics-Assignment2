@@ -59,8 +59,9 @@ void GLWidget::startup()
     xup=zup=0.0;
     yup=1.0;
     cMode=0;
+    mMode=0;
     filled=false;
-
+    selectedPoint=-1;
     angle = M_PI/4.0;
     elevation = M_PI/4.0;
     radius = 10.0;
@@ -142,7 +143,7 @@ void GLWidget::paintGL()
         glOrtho(-5.0f, 5.0f, -5.0f, 5.0f, 0.0f, 1500.0f);
     glMatrixMode( GL_MODELVIEW );
     */
-    glClear( GL_COLOR_BUFFER_BIT );
+    glClear(GL_COLOR_BUFFER_BIT);
 
     glLoadIdentity();
     gluLookAt(xfrom,yfrom,zfrom, xto, yto, zto, xup, yup, zup);
@@ -154,6 +155,7 @@ void GLWidget::paintGL()
     //makeDice();
     scene.init(filled, xangle, yangle, zangle);
     scene.draw();
+
 }
 
 /* 2D */
@@ -481,13 +483,52 @@ void GLWidget::setzFrom(int a)
 // mouse routines for camera control to be implemented
 void GLWidget::mousePressEvent( QMouseEvent *e )
 {
+
     if(e->buttons()==Qt::LeftButton)
     {
         mouseX = e->pos().x();
         mouseY = e->pos().y();
 
+        double widgetX = (mouseX - xDiff) / coordToL;
+        double widgetY = (yDiff - mouseY) / coordToL;
+
+        // selectedPoint = -1;
+
+        switch (mMode)
+        {
+        case 0: // Control Camera
+        {
+            // get current radius
+            radius = sqrt(pow(xfrom, 2.0) + pow(yfrom, 2.0) + pow(zfrom, 2.0));
+        } 
+            break;
+        case 1: // Add point
+        {
+            scene.addPoint(cMode, widgetX, widgetY);
+        }
+            break;
+        case 2: // Move Point
+        {
+            selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+            //qDebug() << "selectedPoint: " << selectedPoint;
+        }
+            break;
+        case 3: // Delete Point
+        {
+            selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+            if(selectedPoint != -1)
+                scene.deletePoint(selectedPoint);
+        }
+            break;
+        }
+
+        /*
+        mouseX = e->pos().x();
+        mouseY = e->pos().y();
+
         // get current radius
         radius = sqrt(pow(xfrom, 2.0) + pow(yfrom, 2.0) + pow(zfrom, 2.0));
+        */
     }
     else if(e->buttons()==Qt::RightButton)
     {
@@ -521,6 +562,8 @@ void GLWidget::mouseReleaseEvent( QMouseEvent *e)
 
 void GLWidget::mouseMoveEvent ( QMouseEvent *e )
 {
+    //if(cMode !=0) return;  // Only perspective mode is allowed to move camera
+
     if(e->buttons()==Qt::LeftButton)
     {
         // left-right controls azimuth angle and
@@ -528,45 +571,68 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
         int diffX = e->pos().x() - mouseX;
         int diffY = e->pos().y() - mouseY;
 
+        if(cMode == 0)  // Perspective View
+        {
+            angle += diffX * mouseSpeed;
+            elevation += diffY * mouseSpeed;
+
+            QList<double> cameraP = getCameraPosition();
+            xfrom = cameraP.at(0);
+            yfrom = cameraP.at(1);
+            zfrom = cameraP.at(2);
+        }
+        else    // 2D View
+        {
+            if(mMode == 2)  // Move
+            {
+                if(selectedPoint != -1) // A point is selected
+                {
+                    scene.movePoint(cMode, selectedPoint, diffX/coordToL, diffY/coordToL);
+                }
+            }
+        }
+        /*
         switch (cMode)
         {
-            case 0:
-            {
-                angle += diffX * mouseSpeed;
-                elevation += diffY * mouseSpeed;
+        case 0:
+        {
+            angle += diffX * mouseSpeed;
+            elevation += diffY * mouseSpeed;
 
-                QList<double> cameraP = getCameraPosition();
-                xfrom = cameraP.at(0);
-                yfrom = cameraP.at(1);
-                zfrom = cameraP.at(2);
-            }break;
-
-            case 1:
-            {
-                xfrom += diffX * mouseSpeed;
-                zfrom += diffY * mouseSpeed;
-                xto += diffX * mouseSpeed;
-                zto += diffY * mouseSpeed;
-            }break;
-
-            case 2:
-            {
-                xfrom += diffX * mouseSpeed;
-                yfrom += diffY * mouseSpeed;
-                xto += diffX * mouseSpeed;
-                yto += diffY * mouseSpeed;
-            }break;
-
-            case 3:
-            {
-                zfrom += diffX * mouseSpeed;
-                yfrom += diffY * mouseSpeed;
-                zto += diffX * mouseSpeed;
-                yto += diffY * mouseSpeed;
-            }break;
+            QList<double> cameraP = getCameraPosition();
+            xfrom = cameraP.at(0);
+            yfrom = cameraP.at(1);
+            zfrom = cameraP.at(2);
+        }
+            break;
+        case 1:
+        {
+            //selectedPoint << scene.isSelected(cMode, widgetX, widgetY);
+            qDebug() << "selectedPoint: " << selectedPoint;
+            if(selectedPoint != -1)
+                scene.movePoint(cMode, selectedPoint, diffX * mouseSpeed, diffY * mouseSpeed);
+            //xfrom += diffX * mouseSpeed;
+            //zfrom += diffY * mouseSpeed;
 
         }
+            break;
+        case 2:
+        {
+            xfrom += diffX * mouseSpeed;
+            yfrom += diffY * mouseSpeed;
 
+        }
+            break;
+        case 3:
+        {
+            zfrom += diffX * mouseSpeed;
+            yfrom += diffY * mouseSpeed;
+
+        }
+            break;
+
+        }
+        */
         /*
         angle += diffX * mouseSpeed;
         elevation += diffY * mouseSpeed;
@@ -575,9 +641,6 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
         xfrom = cameraP.at(0);
         yfrom = cameraP.at(1);
         zfrom = cameraP.at(2);
-
-        //xfrom += diffX * mouseSpeed;
-        //yfrom += diffY * mouseSpeed;
         */
         mouseX = e->pos().x();
         mouseY = e->pos().y();
@@ -677,6 +740,19 @@ void GLWidget::setRightView()
     xfrom = 50.0;
     xup = zup = 0.0;
     yup = 1.0;
-
+    /*
+    scene.addPoint(-0.5, 0.5, 1);
+    scene.addPoint(-0.5, 0.2, 0.5);
+    scene.addPoint(0, 0.5, 0);
+    scene.addPoint(0.1, 0.3, -0.5);
+    scene.addPoint(0.5, 0.5, -1);
+    scene.addPoint(0.7, 0.9, -1.3);
+    scene.addPoint(1.5, 1.2, -1);
+    */
     updateGL();
+}
+
+void GLWidget::setMouseMode(int i)
+{
+    mMode = i;
 }

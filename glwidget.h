@@ -20,8 +20,14 @@
 const int maxw=1024;
 const int maxh=1024;
 const int unitLength=20;    // store unit length of mouse move
-//const double halfLength=0.8;    // half length of cube sides
+// const double halfLength=0.8;    // half length of cube sides
 const double mouseSpeed=0.01;
+// mouse coordinate to widget coordinate: (x-xDiff, yDiff-y)
+const double xDiff = 285;
+const double yDiff = 289;
+// coordinate to real length ratio
+const double coordToL = 57;
+
 //This is our OpenGL Component we built it on top of QGLWidget
 class GLWidget : public QGLWidget
 {
@@ -47,10 +53,12 @@ public:
 
     // Different camera view postions
     void setPerspectiveView();
-    void setOrthoView();
     void setTopView();
     void setFrontView();
     void setRightView();
+
+    // Different mouse mode
+    void setMouseMode(int i);
 
 protected:
     //Initialize the OpenGL Graphics Engine
@@ -121,20 +129,32 @@ private:
     // Return a list contains current camera position
     QList<double> getCameraPosition();
 
-    /* Camera mode:
+    /* Camera Mode:
      * 0 - Perspective View
      * 1 - Top View: x-z
      * 2 - Front View: x-y
      * 3 - Right View: z-y
-     */
+    */
     int cMode;
 
+    /* Mouse Mode:
+     * 0 - Control Camera
+     * 1 - Add Point
+     * 2 - Move Point
+     * 3 - Delete Point
+    */
+
+    // Set init ortognal view
+    void setOrthoView();
+
+    int mMode;
 
     // up vector
     float xup, yup, zup;
 
     Scene scene;
 
+    int selectedPoint;
 };
 
 

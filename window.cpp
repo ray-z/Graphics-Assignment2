@@ -22,7 +22,7 @@ Window::Window(QWidget *parent):QDialog(parent)
 
     //Setup application interface. Creates all the required components and sliders.
     setupUi(this);
-
+    disablePtMode();
     //We need to attach our m_glWidget to glWidgetArea
     //All our drawings will be on glWidgetArea
     glWidgetArea->setWidget(m_glWidget);
@@ -90,19 +90,60 @@ void Window::filledOn(bool a)
 void Window::perspectiveView()
 {
     m_glWidget->setPerspectiveView();
+    disablePtMode();
 }
 
 void Window::topView()
 {
     m_glWidget->setTopView();
+    enablePtMode();
 }
 
 void Window::frontView()
 {
     m_glWidget->setFrontView();
+    enablePtMode();
 }
 
 void Window::rightView()
 {
     m_glWidget->setRightView();
+    enablePtMode();
+}
+
+void Window::ctrlCamera()
+{
+    m_glWidget->setMouseMode(0);
+}
+
+void Window::addPt()
+{
+    m_glWidget->setMouseMode(1);
+}
+
+void Window::movePt()
+{
+    m_glWidget->setMouseMode(2);
+}
+
+void Window::deletePt()
+{
+    m_glWidget->setMouseMode(3);
+}
+
+void Window::enablePtMode()
+{
+    this->rb_addPt->setEnabled(true);
+    this->rb_movePt->setEnabled(true);
+    this->rb_deletePt->setEnabled(true);
+}
+
+void Window::disablePtMode()
+{
+    this->rb_addPt->setEnabled(false);
+    this->rb_movePt->setEnabled(false);
+    this->rb_deletePt->setEnabled(false);
+
+    this->rb_ctrlCamera->setChecked(true);
+    ctrlCamera();
 }

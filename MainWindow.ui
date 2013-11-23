@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1065</width>
-    <height>724</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,8 +36,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>759</width>
-        <height>704</height>
+        <width>574</width>
+        <height>580</height>
        </rect>
       </property>
      </widget>
@@ -47,8 +47,8 @@
     <widget class="QGroupBox" name="tool_box">
      <property name="maximumSize">
       <size>
-       <width>280</width>
-       <height>900</height>
+       <width>200</width>
+       <height>600</height>
       </size>
      </property>
      <property name="title">
@@ -57,7 +57,7 @@
      <widget class="QRadioButton" name="radioButton">
       <property name="geometry">
        <rect>
-        <x>90</x>
+        <x>70</x>
         <y>370</y>
         <width>61</width>
         <height>20</height>
@@ -72,15 +72,20 @@
        <rect>
         <x>0</x>
         <y>40</y>
-        <width>272</width>
-        <height>319</height>
+        <width>191</width>
+        <height>311</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QGroupBox" name="cube_rotation">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="title">
-          <string>Cube Rotation</string>
+          <string>Rotation</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -175,14 +180,19 @@
        </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="change_view">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="title">
-          <string>Change View</string>
+          <string>Views</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QRadioButton" name="radioButton_6">
             <property name="text">
-             <string>Perspective</string>
+             <string>3D</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -215,8 +225,13 @@
        </item>
        <item row="0" column="1">
         <widget class="QGroupBox" name="camera_position">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="title">
-          <string>Camera Position</string>
+          <string>Camera</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -226,6 +241,15 @@
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <widget class="QLabel" name="label_5">
+              <property name="font">
+               <font>
+                <family>Lucida Grande</family>
+                <pointsize>18</pointsize>
+                <weight>9</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
               <property name="styleSheet">
                <string notr="true">font: 75 18pt &quot;Lucida Grande&quot;;
 color: rgb(255, 0, 0);</string>
@@ -311,12 +335,22 @@ color: rgb(0, 0, 255);</string>
        </item>
        <item row="1" column="1">
         <widget class="QGroupBox" name="edit_point">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="title">
           <string>Edit Point</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QRadioButton" name="radioButton_5">
+           <widget class="QRadioButton" name="rb_ctrlCamera">
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
             <property name="acceptDrops">
              <bool>false</bool>
             </property>
@@ -329,21 +363,30 @@ color: rgb(0, 0, 255);</string>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_2">
+           <widget class="QRadioButton" name="rb_addPt">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Add</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_3">
+           <widget class="QRadioButton" name="rb_movePt">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Move</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="radioButton_4">
+           <widget class="QRadioButton" name="rb_deletePt">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="text">
              <string>Delete</string>
             </property>
@@ -357,8 +400,8 @@ color: rgb(0, 0, 255);</string>
      <widget class="QPushButton" name="btnClose">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>620</y>
+        <x>30</x>
+        <y>420</y>
         <width>131</width>
         <height>61</height>
        </rect>
@@ -412,7 +455,7 @@ color: rgb(0, 0, 255);</string>
    <slot>xFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
+     <x>266</x>
      <y>108</y>
     </hint>
     <hint type="destinationlabel">
@@ -428,8 +471,8 @@ color: rgb(0, 0, 255);</string>
    <slot>yFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
-     <y>149</y>
+     <x>266</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -444,8 +487,8 @@ color: rgb(0, 0, 255);</string>
    <slot>zFrom(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>269</x>
-     <y>190</y>
+     <x>266</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
      <x>189</x>
@@ -509,7 +552,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>209</x>
-     <y>667</y>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>657</x>
@@ -525,7 +568,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>209</x>
-     <y>661</y>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>194</x>
@@ -541,7 +584,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>209</x>
-     <y>667</y>
+     <y>489</y>
     </hint>
     <hint type="destinationlabel">
      <x>650</x>
@@ -597,6 +640,70 @@ color: rgb(0, 0, 255);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>rb_ctrlCamera</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>ctrlCamera()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>178</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>291</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_addPt</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>addPt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_movePt</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>movePt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_deletePt</sender>
+   <signal>clicked()</signal>
+   <receiver>frmMain</receiver>
+   <slot>deletePt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>344</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>290</x>
+     <y>383</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>pushmebut()</slot>
@@ -612,5 +719,9 @@ color: rgb(0, 0, 255);</string>
   <slot>frontView()</slot>
   <slot>rightView()</slot>
   <slot>perspectiveView()</slot>
+  <slot>ctrlCamera()</slot>
+  <slot>addPt()</slot>
+  <slot>movePt()</slot>
+  <slot>deletePt()</slot>
  </slots>
 </ui>
