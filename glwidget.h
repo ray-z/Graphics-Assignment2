@@ -112,7 +112,7 @@ private:
     //void drawGround();
 
     // A list of 'View to' point
-    QList<QList<double> > viewPoints;
+    QList<QList<double> > viewPoints;   // TODO: remove this
     void initViewPointsList();
     void addViewPoint(double x, double y, double z);
 
@@ -155,6 +155,9 @@ private:
     Scene scene;
 
     int selectedPoint;
+
+    // set look to
+    void setLookTo(double x, double y, double z);
 };
 
 

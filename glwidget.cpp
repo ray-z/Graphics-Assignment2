@@ -542,14 +542,51 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
     }
     else if(e->buttons()==Qt::MiddleButton)
     {
+        if(cMode != 0) return;
+        selectedPoint +=1;
+        if(selectedPoint == scene.getPointsL())
+        {
+            selectedPoint = -1;
+            setLookTo(0, 0, 0);
+        }
+        else
+        {
+            QVector3D p = scene.getSelectedPoint(selectedPoint);
+            setLookTo(p.x(), p.y(), p.z());
+        }
+
         // Change view point
         // All view points are pre-defined
         // View point is chosed by cycling through list
-        xto = viewPoints.at(0).at(0);
-        yto = viewPoints.at(0).at(1);
-        zto = viewPoints.at(0).at(2);
-        viewPoints.pop_front();
-        viewPoints.append(viewPoints.at(0));
+//        xto = viewPoints.at(0).at(0);
+//        yto = viewPoints.at(0).at(1);
+//        zto = viewPoints.at(0).at(2);
+//        viewPoints.pop_front();
+//        viewPoints.append(viewPoints.at(0));
+
+//        // Switch between:
+//        // Look at current selected point and
+//        // (0, 0, 0)
+//        if(selectedPoint != -1)
+//        {
+//            if(isLookToCenter)
+//            {
+//                QVector3D p = scene.getSelectedPoint(selectedPoint);
+//                setLookTo(p.x(), p.y(), p.z());
+//                isLookToCenter = false;
+//            }
+//            else
+//            {
+//                setLookTo(0,0,0);
+//                isLookToCenter = true;
+//            }
+//        }
+//        else
+//        {
+//            setLookTo(0,0,0);
+//            isLookToCenter = true;
+//        }
+
     }
     updateGL();
 }
@@ -755,4 +792,11 @@ void GLWidget::setRightView()
 void GLWidget::setMouseMode(int i)
 {
     mMode = i;
+}
+
+void GLWidget::setLookTo(double x, double y, double z)
+{
+    xto = x;
+    yto = y;
+    zto = z;
 }
