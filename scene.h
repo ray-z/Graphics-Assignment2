@@ -60,6 +60,9 @@ private:
     // Store Frame position
     int pointIndex;
     double tForFrame;
+
+    // Draw cube w.r.t Frenet Frame
+    void drawCube(QVector3D vCentre, QVector3D vT, QVector3D vB, QVector3D vN);
 };
 
 #endif // SCENE_H

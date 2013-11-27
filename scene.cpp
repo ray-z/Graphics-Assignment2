@@ -278,6 +278,8 @@ void Scene::drawFrame(int i, double t)
     glVertex3f(pPos.x()+pointN.x(), pPos.y()+pointN.y(), pPos.z()+pointN.z());
     glEnd();
 
+    // test
+    drawCube(pPos, pointT, pointB, pointN);
 
     /*
     int numP = points.length();
@@ -329,6 +331,76 @@ void Scene::drawFrame(int i, double t)
     }
     */
 }
+
+void Scene::drawCube(QVector3D vCentre, QVector3D vT, QVector3D vB, QVector3D vN)
+{
+    /*
+     * Back: vCenter-VB-vBack-vT
+     * Bottom: vCenter-vT-vBottom-vN
+     * Left: vCenter-vN-vLeft-vB
+     * Front: vN-vLeft-vFront-vBottom
+     * Top: vB-vBack-vFront-vLeft
+     * Right: vT-vBottom-vFront-vBack
+     */
+    QVector3D vBack = vB + vT;
+    QVector3D vBottom = vT + vN;
+    QVector3D vLeft = vB + vN;
+    QVector3D vFront = vB + vBottom;
+
+    vT += vCentre;
+    vB += vCentre;
+    vN += vCentre;
+    vBack += vCentre;
+    vBottom += vCentre;
+    vLeft += vCentre;
+    vFront += vCentre;
+
+    glColor3f(1.0, 0.0, 0.0);
+    glLineWidth(1);
+    // Back
+    if (isFilled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
+    glVertex3f(vCentre.x(), vCentre.y(), vCentre.z());
+    glVertex3f(vB.x(), vB.y(), vB.z());
+    glVertex3f(vBack.x(), vBack.y(), vBack.z());
+    glVertex3f(vT.x(), vT.y(), vT.z());
+    glEnd();
+    // Bottom
+    if (isFilled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
+    glVertex3f(vCentre.x(), vCentre.y(), vCentre.z());
+    glVertex3f(vT.x(), vT.y(), vT.z());
+    glVertex3f(vBottom.x(), vBottom.y(), vBottom.z());
+    glVertex3f(vN.x(), vN.y(), vN.z());
+    glEnd();
+    // Left
+    if (isFilled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
+    glVertex3f(vCentre.x(), vCentre.y(), vCentre.z());
+    glVertex3f(vN.x(), vN.y(), vN.z());
+    glVertex3f(vLeft.x(), vLeft.y(), vLeft.z());
+    glVertex3f(vB.x(), vB.y(), vB.z());
+    glEnd();
+    // Front
+    if (isFilled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
+    glVertex3f(vN.x(), vN.y(), vN.z());
+    glVertex3f(vLeft.x(), vLeft.y(), vLeft.z());
+    glVertex3f(vFront.x(), vFront.y(), vFront.z());
+    glVertex3f(vBottom.x(), vBottom.y(), vBottom.z());
+    glEnd();
+    // Top
+    if (isFilled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
+    glVertex3f(vB.x(), vB.y(), vB.z());
+    glVertex3f(vBack.x(), vBack.y(), vBack.z());
+    glVertex3f(vFront.x(), vFront.y(), vFront.z());
+    glVertex3f(vLeft.x(), vLeft.y(), vLeft.z());
+    glEnd();
+    // Right
+    if (isFilled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
+    glVertex3f(vT.x(), vT.y(), vT.z());
+    glVertex3f(vBottom.x(), vBottom.y(), vBottom.z());
+    glVertex3f(vFront.x(), vFront.y(), vFront.z());
+    glVertex3f(vBack.x(), vBack.y(), vBack.z());
+    glEnd();
+}
+
 
 int Scene::isSelected(int cMode, double h, double v)
 {
