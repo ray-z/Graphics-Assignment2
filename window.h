@@ -66,6 +66,10 @@ private slots:
     // Show Cylinder
     void showCylinder(bool isToggled);
 
+    // enable/disable cube and cylinder
+    void enableChkbox();
+    void disableChkbox();
+
 protected:
     void resizeEvent(QResizeEvent * );
 };

@@ -404,14 +404,14 @@ color: rgb(0, 0, 255);</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QCheckBox" name="chkbox_frame">
          <property name="text">
           <string>Show Frenet Frame</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="chkbox_frame">
+        <widget class="QCheckBox" name="chkbox_cube">
          <property name="text">
           <string>Show Cube</string>
          </property>
@@ -442,7 +442,7 @@ color: rgb(0, 0, 255);</string>
         </layout>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="chkbox_cylinder">
          <property name="text">
           <string>Show Cylinder</string>
          </property>
@@ -745,7 +745,7 @@ color: rgb(0, 0, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkBox_2</sender>
+   <sender>chkbox_frame</sender>
    <signal>toggled(bool)</signal>
    <receiver>frmMain</receiver>
    <slot>showFrame(bool)</slot>
@@ -761,7 +761,7 @@ color: rgb(0, 0, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>chkbox_frame</sender>
+   <sender>chkbox_cube</sender>
    <signal>toggled(bool)</signal>
    <receiver>frmMain</receiver>
    <slot>showCube(bool)</slot>
@@ -777,7 +777,7 @@ color: rgb(0, 0, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>checkBox</sender>
+   <sender>chkbox_cylinder</sender>
    <signal>toggled(bool)</signal>
    <receiver>frmMain</receiver>
    <slot>showCylinder(bool)</slot>

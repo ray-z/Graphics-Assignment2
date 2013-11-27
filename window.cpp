@@ -23,6 +23,7 @@ Window::Window(QWidget *parent):QDialog(parent)
     //Setup application interface. Creates all the required components and sliders.
     setupUi(this);
     disablePtMode();
+    disableChkbox();
     //We need to attach our m_glWidget to glWidgetArea
     //All our drawings will be on glWidgetArea
     glWidgetArea->setWidget(m_glWidget);
@@ -156,6 +157,8 @@ void Window::moveFrame(int i)
 
 void Window::showFrame(bool isToggled)
 {
+    if(isToggled) enableChkbox();
+    else disableChkbox();
     m_glWidget->showFrame(isToggled);
 }
 
@@ -167,4 +170,22 @@ void Window::showCube(bool isToggled)
 void Window::showCylinder(bool isToggled)
 {
     m_glWidget->showCylinder(isToggled);
+}
+
+void Window::enableChkbox()
+{
+    this->chkbox_cube->setEnabled(true);
+    this->chkbox_cylinder->setEnabled(true);
+    this->slider_t->setEnabled(true);
+}
+
+void Window::disableChkbox()
+{
+    this->chkbox_cube->setEnabled(false);
+    this->chkbox_cylinder->setEnabled(false);
+    this->slider_t->setEnabled(false);
+
+    this->chkbox_cube->setChecked(false);
+    this->chkbox_cylinder->setChecked(false);
+
 }
