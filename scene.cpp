@@ -10,15 +10,31 @@ void Scene::init(bool f, double x, double y, double z)
     xangle = x;
     yangle = y;
     zangle = z;
-
 }
 
 void Scene::draw()
 {
+    makeDice();
     drawGround();
     drawPoints();
-    makeDice();
+    drawFrame(pointIndex, tForFrame);
 
+}
+
+QVector3D Scene::getSelectedPoint(int i)
+{
+    return points.at(i);
+}
+
+int Scene::getPointsL()
+{
+    return points.length();
+}
+
+void Scene::setFramePos(int i, double t)
+{
+    pointIndex = i;
+    tForFrame = t;
 }
 
 GLuint Scene::makeDice()
@@ -71,6 +87,9 @@ GLuint Scene::makeDice()
   //  glEndList();
 
   //  return list;
+    glRotatef( 0, 1.0, 0.0, 0.0 );
+    glRotatef( 0, 0.0, 1.0, 0.0 );
+    glRotatef( 0, 0.0, 0.0, 1.0 );
     return 0;
 }
 
@@ -145,21 +164,32 @@ void Scene::addPoint(int cMode, double h, double v)
      * Front view: (h, v, 0)
      * Right view: (0, v, -h)
      */
-    QList<double> newPoint;
+    QVector3D newPoint(0.0, 0.0, 0.0);
     switch (cMode)
     {
     case 1:
-        newPoint << h << 0.0 << -v;
+    {
+        //newPoint(h, 0.0, -v);
+        newPoint.setX(h);
+        newPoint.setZ(-v);
+    }
         break;
     case 2:
-        newPoint << h << v << 0.0;
+    {
+        //newPoint(h, v, 0.0);
+        newPoint.setX(h);
+        newPoint.setY(v);
+    }
         break;
     case 3:
-        newPoint << 0.0 << v << -h;
+    {
+        //newPoint(0.0, v, -h);
+        newPoint.setY(v);
+        newPoint.setZ(-h);
+    }
         break;
     }
     points << newPoint;
-    newPoint.clear();
 }
 
 void Scene::drawPoints()
@@ -172,21 +202,87 @@ void Scene::drawPoints()
 
 
     glBegin(GL_POINTS);
-    foreach(QList<double> p, points)
+    foreach(QVector3D p, points)
     {
-        glVertex3f(p.at(0), p.at(1), p.at(2));
+        glVertex3f(p.x(), p.y(), p.z());
     }
     glEnd();
 
     if(points.length() > 3) drawSpline();
 }
 
+
+
 void Scene::drawSpline()
 {
     int numP = points.length();
-    double xNew, yNew, zNew;   //Points on the Catmull-Rom spline
+    glColor3f(0.0, 0.0, 0.0);
+    glLineWidth(1);
+    glBegin(GL_LINE_STRIP);
+    for(int i = 1; i < numP-2; i++)
+    {
+        for(double t=0; t<1; t+=0.02)
+        {
+            QVector3D p = getPointPos(i, t);
 
+            glVertex3f(p.x(), p.y(), p.z());
+        }
+    }
+    glEnd();
+}
+
+void Scene::drawFrame(int i, double t)
+{
+    if(i < 1 || i >= points.length()-2) return;
+    // Catmull-Rom Spline Equation: P = A*t*t*t + B*t*t + C*t + D;
+    QVector3D vectorA, vectorB, vectorC;
+    vectorA = (-0.5*points.at(i-1) + 1.5*points.at(i) - 1.5*points.at(i+1) + 0.5*points.at(i+2));
+    vectorB = (points.at(i-1) - 2.5*points.at(i) + 2*points.at(i+1) - 0.5*points.at(i+2));
+    vectorC = (-0.5*points.at(i-1)+0.5*points.at(i+1));
+
+    // V = 3*A*t*t + 2*B*t + C
+    // Q = 6*A*t + 2*B
+    QVector3D vectorV, vectorQ, vectorVQ, vectorVQV;
+    vectorV = 3*vectorA*t*t + 2*vectorB*t + vectorC;
+    vectorQ = 6*vectorA*t + 2*vectorB;
+    vectorVQ = vectorVQ.crossProduct(vectorV, vectorQ);
+    vectorVQV = vectorVQV.crossProduct(vectorVQ, vectorV);
+    // T = V/|V|
+    // B = V*Q/|V*Q|
+    // N = V*Q*V/|V*Q*V|
+    // Not a real vector, to store point position only
+    QVector3D pointT, pointN, pointB;
+    pointT = vectorV.normalized();
+    pointB = vectorVQ.normalized();
+    pointN = vectorVQV.normalized();
+
+    // Draw Frenet Frame
+    QVector3D pPos = getPointPos(i, t);
+    glLineWidth(2);
+    // T: Red
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex3f(pPos.x(), pPos.y(), pPos.z());
+    glVertex3f(pPos.x()+pointT.x(), pPos.y()+pointT.y(), pPos.z()+pointT.z());
+    glEnd();
+    // B: Green
+    glColor3f(0.0, 1.0, 0.0);
+    glBegin(GL_LINES);
+    glVertex3f(pPos.x(), pPos.y(), pPos.z());
+    glVertex3f(pPos.x()+pointB.x(), pPos.y()+pointB.y(), pPos.z()+pointB.z());
+    glEnd();
+    // N: Blue
+    glColor3f(0.0, 0.0, 1.0);
+    glBegin(GL_LINES);
+    glVertex3f(pPos.x(), pPos.y(), pPos.z());
+    glVertex3f(pPos.x()+pointN.x(), pPos.y()+pointN.y(), pPos.z()+pointN.z());
+    glEnd();
+
+
+    /*
+    int numP = points.length();
     // init a list of x, y, z
+
     double x[numP], y[numP], z[numP];
     for(int l = 0; l < numP; l++)
     {
@@ -195,24 +291,43 @@ void Scene::drawSpline()
         z[l] = points.at(l).at(2);
     }
 
-    glBegin(GL_LINE_STRIP);
+    float xv, yv, zv, xt, yt, zt;
     for(int i = 1; i < numP-2; i++)
     {
-        for(int k = 0;  k < 50; k++){    //50 points
-           double t = k*0.02;  //Interpolation parameter
-           xNew = x[i] + 0.5*t*(-x[i-1]+x[i+1])
-               + t*t*(x[i-1] - 2.5*x[i] + 2*x[i+1] - 0.5*x[i+2])
-               + t*t*t*(-0.5*x[i-1] + 1.5*x[i] - 1.5*x[i+1] + 0.5*x[i+2]);
-           yNew = y[i] + 0.5*t*(-y[i-1]+y[i+1])
-               + t*t*(y[i-1] - 2.5*y[i] + 2*y[i+1] - 0.5*y[i+2])
-               + t*t*t*(-0.5*y[i-1] + 1.5*y[i] - 1.5*y[i+1] + 0.5*y[i+2]);
-           zNew = z[i] + 0.5*t*(-z[i-1]+z[i+1])
-               + t*t*(z[i-1] - 2.5*z[i] + 2*z[i+1] - 0.5*z[i+2])
-               + t*t*t*(-0.5*z[i-1] + 1.5*z[i] - 1.5*z[i+1] + 0.5*z[i+2]);
-           glVertex3f(xNew, yNew, zNew);
-       }
+        double t = 0.5;
+
+        float xa = -0.5*x[i-1] + 1.5*x[i] - 1.5*x[i+1] + 0.5*x[i+2];
+        float xb = x[i-1] - 2.5*x[i] + 2*x[i+1] - 0.5*x[i+2];
+        float xc = -0.5*x[i-1]+0.5*x[i+1];
+
+        float ya = -0.5*y[i-1] + 1.5*y[i] - 1.5*y[i+1] + 0.5*y[i+2];
+        float yb = y[i-1] - 2.5*y[i] + 2*y[i+1] - 0.5*y[i+2];
+        float yc = -0.5*y[i-1]+0.5*y[i+1];
+
+        float za = -0.5*z[i-1] + 1.5*z[i] - 1.5*z[i+1] + 0.5*z[i+2];
+        float zb = z[i-1] - 2.5*z[i] + 2*z[i+1] - 0.5*z[i+2];
+        float zc = -0.5*z[i-1]+0.5*z[i+1];
+        glBegin(GL_LINE_STRIP);
+        for(int i = 1; i < numP-2; i++)
+        {
+            for(int k = 0;  k < 50; k++)    //50 points
+            {
+                double t = k*0.02;  //Interpolation parameter
+                xv = (3*xa*t*t + 2*xb*t + xc);
+                yv = (3*ya*t*t + 2*yb*t + yc);
+                zv = (3*za*t*t + 2*zb*t + zc);
+
+                xt = xv/sqrt(xv*xv + yv*yv + zv*zv);
+                yt = yv/sqrt(xv*xv + yv*yv + zv*zv);
+                zt = zv/sqrt(xv*xv + yv*yv + zv*zv);
+
+            glVertex3f(xt, yt, zt);
+            }
+        }
+        glEnd();
+
     }
-    glEnd();
+    */
 }
 
 int Scene::isSelected(int cMode, double h, double v)
@@ -225,8 +340,8 @@ int Scene::isSelected(int cMode, double h, double v)
         {
             //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
 
-            if(fabs(h - points.at(i).at(0)) < selectAccuracy &&
-                    fabs(-v - points.at(i).at(2)) < selectAccuracy)
+            if(fabs(h - points.at(i).x()) < selectAccuracy &&
+                    fabs(-v - points.at(i).z()) < selectAccuracy)
             {
                 return i;
             }
@@ -239,8 +354,8 @@ int Scene::isSelected(int cMode, double h, double v)
         {
             //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
 
-            if(fabs(h - points.at(i).at(0)) < selectAccuracy &&
-                    fabs(v - points.at(i).at(1)) < selectAccuracy)
+            if(fabs(h - points.at(i).x()) < selectAccuracy &&
+                    fabs(v - points.at(i).y()) < selectAccuracy)
             {
                 return i;
             }
@@ -253,8 +368,8 @@ int Scene::isSelected(int cMode, double h, double v)
         {
             //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
 
-            if(fabs(v - points.at(i).at(1)) < selectAccuracy &&
-                    fabs(-h - points.at(i).at(2)) < selectAccuracy)
+            if(fabs(v - points.at(i).y()) < selectAccuracy &&
+                    fabs(-h - points.at(i).z()) < selectAccuracy)
             {
                 return i;
             }
@@ -267,30 +382,45 @@ int Scene::isSelected(int cMode, double h, double v)
 
 void Scene::movePoint(int cMode, int i, double h, double v)
 {
-    QList<double> selectedPoint;
+    QVector3D selectedPoint=points.at(i);
     switch (cMode)
     {
     case 1: // Top view: x-z (h, 0, -v)
     {
-        selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) << points.at(i).at(2) + v;
+        //selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) << points.at(i).at(2) + v;
+        selectedPoint.setX(selectedPoint.x() + h);
+        selectedPoint.setZ(selectedPoint.z() + v);
     }
         break;
     case 2: // Front view: x-y (h, v, 0)
     {
-        selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) - v << points.at(i).at(2);
+        //selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) - v << points.at(i).at(2);
+        selectedPoint.setX(selectedPoint.x() + h);
+        selectedPoint.setY(selectedPoint.y() - v);
     }
         break;
     case 3: // Right view: z-y (0, v, -h)
     {
-        selectedPoint << points.at(i).at(0) << points.at(i).at(1) - v << points.at(i).at(2) - h;
+        //selectedPoint << points.at(i).at(0) << points.at(i).at(1) - v << points.at(i).at(2) - h;
+        selectedPoint.setY(selectedPoint.y() - v);
+        selectedPoint.setZ(selectedPoint.z() - h);
     }
         break;
     }
     points.replace(i, selectedPoint);
-    selectedPoint.clear();
 }
 
 void Scene::deletePoint(int i)
 {
     points.removeAt(i);
 }
+
+QVector3D Scene::getPointPos(int i, double t)
+{
+    QVector3D pointPos;
+    pointPos = points.at(i) + t*(-0.5*points.at(i-1)+0.5*points.at(i+1))
+        + t*t*(points.at(i-1) - 2.5*points.at(i) + 2*points.at(i+1) - 0.5*points.at(i+2))
+        + t*t*t*(-0.5*points.at(i-1) + 1.5*points.at(i) - 1.5*points.at(i+1) + 0.5*points.at(i+2));
+    return pointPos;
+}
+

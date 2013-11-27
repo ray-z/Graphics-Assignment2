@@ -4,6 +4,7 @@
 #include <QtOpenGL>
 #include <QList>
 #include <math.h>
+#include <QMatrix4x3>
 
 const double halfLength=0.8;    // half length of cube sides
 const double selectAccuracy=0.2;    // different range allowed between mouse pointer and point
@@ -25,6 +26,13 @@ public:
     // Check if a point is selected
     // return index of point if selected, else return -1
     int isSelected(int cMode, double h, double v);
+    // Get selected point position
+    QVector3D getSelectedPoint(int i);
+    // Get total points length
+    int getPointsL();
+    // Set Frame position
+    void setFramePos(int i, double t);
+
 
 private:
     // Draw grid ground
@@ -38,12 +46,20 @@ private:
     // Cube angles
     double xangle, yangle, zangle;
     // A list to store points
-    QList<QList<double> > points;
+    QList<QVector3D> points;
 
     void drawPoints();
+    // Draw Catmull-Rom Spline
     void drawSpline();
+    // Draw Frenet Frame at selected point
+    void drawFrame(int i, double t);
 
+    //Points on the Catmull-Rom spline
+    QVector3D getPointPos(int i, double t);
 
+    // Store Frame position
+    int pointIndex;
+    double tForFrame;
 };
 
 #endif // SCENE_H

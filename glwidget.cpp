@@ -155,7 +155,6 @@ void GLWidget::paintGL()
     //makeDice();
     scene.init(filled, xangle, yangle, zangle);
     scene.draw();
-
 }
 
 /* 2D */
@@ -493,18 +492,24 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
         double widgetY = (yDiff - mouseY) / coordToL;
 
         // selectedPoint = -1;
-
-        switch (mMode)
-        {
-        case 0: // Control Camera
+        if(cMode == 0)
         {
             // get current radius
             radius = sqrt(pow(xfrom, 2.0) + pow(yfrom, 2.0) + pow(zfrom, 2.0));
+        }
+        switch (mMode)
+        {
+        case 0: // Select Point
+        {
+            startPoint = scene.isSelected(cMode, widgetX, widgetY);
+            scene.setFramePos(startPoint, tForFrame);
+
         } 
             break;
         case 1: // Add point
         {
             scene.addPoint(cMode, widgetX, widgetY);
+            selectedPoint = scene.getPointsL() - 1;
         }
             break;
         case 2: // Move Point
@@ -516,8 +521,14 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
         case 3: // Delete Point
         {
             selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+
             if(selectedPoint != -1)
+            {
                 scene.deletePoint(selectedPoint);
+                // Remove Frenet Frame
+                startPoint = 0;
+                scene.setFramePos(0, 0);
+            }
         }
             break;
         }
@@ -542,14 +553,51 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
     }
     else if(e->buttons()==Qt::MiddleButton)
     {
+        if(cMode != 0) return;
+        selectedPoint +=1;
+        if(selectedPoint == scene.getPointsL())
+        {
+            selectedPoint = -1;
+            setLookTo(0, 0, 0);
+        }
+        else
+        {
+            QVector3D p = scene.getSelectedPoint(selectedPoint);
+            setLookTo(p.x(), p.y(), p.z());
+        }
+
         // Change view point
         // All view points are pre-defined
         // View point is chosed by cycling through list
-        xto = viewPoints.at(0).at(0);
-        yto = viewPoints.at(0).at(1);
-        zto = viewPoints.at(0).at(2);
-        viewPoints.pop_front();
-        viewPoints.append(viewPoints.at(0));
+//        xto = viewPoints.at(0).at(0);
+//        yto = viewPoints.at(0).at(1);
+//        zto = viewPoints.at(0).at(2);
+//        viewPoints.pop_front();
+//        viewPoints.append(viewPoints.at(0));
+
+//        // Switch between:
+//        // Look at current selected point and
+//        // (0, 0, 0)
+//        if(selectedPoint != -1)
+//        {
+//            if(isLookToCenter)
+//            {
+//                QVector3D p = scene.getSelectedPoint(selectedPoint);
+//                setLookTo(p.x(), p.y(), p.z());
+//                isLookToCenter = false;
+//            }
+//            else
+//            {
+//                setLookTo(0,0,0);
+//                isLookToCenter = true;
+//            }
+//        }
+//        else
+//        {
+//            setLookTo(0,0,0);
+//            isLookToCenter = true;
+//        }
+
     }
     updateGL();
 }
@@ -755,4 +803,18 @@ void GLWidget::setRightView()
 void GLWidget::setMouseMode(int i)
 {
     mMode = i;
+}
+
+void GLWidget::setLookTo(double x, double y, double z)
+{
+    xto = x;
+    yto = y;
+    zto = z;
+}
+
+void GLWidget::setFramePos(double t)
+{
+    tForFrame = t;
+    scene.setFramePos(startPoint, tForFrame);
+    updateGL();
 }
