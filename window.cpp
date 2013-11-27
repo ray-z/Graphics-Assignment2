@@ -133,7 +133,7 @@ void Window::deletePt()
 
 void Window::enablePtMode()
 {
-    this->rb_ctrlCamera->setEnabled(true);
+
     this->rb_addPt->setEnabled(true);
     this->rb_movePt->setEnabled(true);
     this->rb_deletePt->setEnabled(true);
@@ -141,7 +141,7 @@ void Window::enablePtMode()
 
 void Window::disablePtMode()
 {
-    this->rb_ctrlCamera->setEnabled(false);
+
     this->rb_addPt->setEnabled(false);
     this->rb_movePt->setEnabled(false);
     this->rb_deletePt->setEnabled(false);
@@ -152,4 +152,14 @@ void Window::disablePtMode()
 void Window::moveFrame(int i)
 {
     m_glWidget->setFramePos(i/100.0);
+}
+
+void Window::showFrame(bool isToggled)
+{
+    m_glWidget->showFrame(isToggled);
+}
+
+void Window::showCube(bool isToggled)
+{
+    m_glWidget->showCube(isToggled);
 }

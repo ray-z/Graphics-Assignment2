@@ -15,7 +15,8 @@ public:
     Scene();
 
     // Initialise a scene
-    void init(bool isFilled, double xangle, double yangle, double zangle);
+    void init(bool isFilled, double xangle, double yangle, double zangle,
+              bool isFrame, bool isCube);
     // Make dice, draw ground and axis
     void draw();
     // Add/Select/Delete points in scene
@@ -52,17 +53,23 @@ private:
     // Draw Catmull-Rom Spline
     void drawSpline();
     // Draw Frenet Frame at selected point
-    void drawFrame(int i, double t);
+    void drawFrame(double sliderT);
 
     //Points on the Catmull-Rom spline
     QVector3D getPointPos(int i, double t);
 
     // Store Frame position
-    int pointIndex;
+    //int pointIndex;
     double tForFrame;
 
     // Draw cube w.r.t Frenet Frame
     void drawCube(QVector3D vCentre, QVector3D vT, QVector3D vB, QVector3D vN);
+
+    // on/off frame and cube
+    bool showFrame, showCube;
+
+    // select point index
+    int selectedPoint;
 };
 
 #endif // SCENE_H

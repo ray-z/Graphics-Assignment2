@@ -40,7 +40,6 @@
         <height>580</height>
        </rect>
       </property>
-      <zorder>tool_box</zorder>
      </widget>
     </widget>
    </item>
@@ -346,20 +345,12 @@ color: rgb(0, 0, 255);</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QRadioButton" name="rb_ctrlCamera">
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="acceptDrops">
-             <bool>false</bool>
+           <widget class="QRadioButton" name="rb_movePt">
+            <property name="enabled">
+             <bool>true</bool>
             </property>
             <property name="text">
-             <string>Select</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
+             <string>Move</string>
             </property>
            </widget>
           </item>
@@ -370,16 +361,6 @@ color: rgb(0, 0, 255);</string>
             </property>
             <property name="text">
              <string>Add</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rb_movePt">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Move</string>
             </property>
            </widget>
           </item>
@@ -411,35 +392,53 @@ color: rgb(0, 0, 255);</string>
        <string>Quit</string>
       </property>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget">
+     <widget class="QWidget" name="verticalLayoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>380</y>
-        <width>151</width>
-        <height>21</height>
+        <y>390</y>
+        <width>160</width>
+        <height>80</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QCheckBox" name="checkBox_2">
          <property name="text">
-          <string>t</string>
+          <string>Show Frenet Frame</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="slider_t">
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="singleStep">
-          <number>2</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+        <widget class="QCheckBox" name="chkbox_frame">
+         <property name="text">
+          <string>Show Cube</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>t</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="slider_t">
+           <property name="maximum">
+            <number>99</number>
+           </property>
+           <property name="singleStep">
+            <number>2</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -674,22 +673,6 @@ color: rgb(0, 0, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>rb_ctrlCamera</sender>
-   <signal>clicked()</signal>
-   <receiver>frmMain</receiver>
-   <slot>ctrlCamera()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>178</x>
-     <y>252</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>291</x>
-     <y>211</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>rb_addPt</sender>
    <signal>clicked()</signal>
    <receiver>frmMain</receiver>
@@ -713,7 +696,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>186</x>
-     <y>315</y>
+     <y>266</y>
     </hint>
     <hint type="destinationlabel">
      <x>294</x>
@@ -729,7 +712,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>186</x>
-     <y>343</y>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
      <x>290</x>
@@ -744,12 +727,44 @@ color: rgb(0, 0, 255);</string>
    <slot>moveFrame(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>162</x>
-     <y>398</y>
+     <x>184</x>
+     <y>472</y>
     </hint>
     <hint type="destinationlabel">
      <x>212</x>
      <y>361</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>frmMain</receiver>
+   <slot>showFrame(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>413</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>211</x>
+     <y>418</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkbox_frame</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>frmMain</receiver>
+   <slot>showCube(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>93</x>
+     <y>438</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>212</x>
+     <y>456</y>
     </hint>
    </hints>
   </connection>
@@ -773,5 +788,7 @@ color: rgb(0, 0, 255);</string>
   <slot>movePt()</slot>
   <slot>deletePt()</slot>
   <slot>moveFrame(int)</slot>
+  <slot>showFrame(bool)</slot>
+  <slot>showCube(bool)</slot>
  </slots>
 </ui>

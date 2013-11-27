@@ -60,6 +60,10 @@ public:
     // Different mouse mode
     void setMouseMode(int i);
 
+    // Show Frame
+    void showFrame(bool isToggled);
+    void showCube(bool isToggled);
+    // Show Cube
     // Set t for Frame
     void setFramePos(double t);
 
@@ -160,6 +164,8 @@ private:
     // These two decide frame position
     int startPoint;
     double tForFrame;
+    bool isFrame;
+    bool isCube;
     // set look to
     void setLookTo(double x, double y, double z);
 };

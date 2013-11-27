@@ -59,6 +59,10 @@ private slots:
     void disablePtMode();
     // Send t to widget
     void moveFrame(int i);
+    // Show Frenet Frame
+    void showFrame(bool isToggled);
+    // Show Cube
+    void showCube(bool isToggled);
 protected:
     void resizeEvent(QResizeEvent * );
 };

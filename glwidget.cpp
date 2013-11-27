@@ -65,6 +65,8 @@ void GLWidget::startup()
     angle = M_PI/4.0;
     elevation = M_PI/4.0;
     radius = 10.0;
+    isFrame = false;
+    isCube = false;
 }
 
 void GLWidget::clear()
@@ -113,7 +115,7 @@ void GLWidget::initializeGL()
     glEnable( GL_CULL_FACE );  	// don't need Z testing for convex objects
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
     //glEnable(GL_COLOR_MATERIAL);
-    initLight();
+    //initLight();
     // No display list in this simple version
     //object = makeDice( );	// Generate an OpenGL display list
 }
@@ -153,8 +155,9 @@ void GLWidget::paintGL()
    // glCallList( object );   no display list this version just make the cube
     //drawGround();
     //makeDice();
-    scene.init(filled, xangle, yangle, zangle);
+    scene.init(filled, xangle, yangle, zangle, isFrame, isCube);
     scene.draw();
+
 }
 
 /* 2D */
@@ -517,6 +520,7 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
             case 2: // Move Point
             {
                 selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+
                 //qDebug() << "selectedPoint: " << selectedPoint;
             }
                 break;
@@ -818,5 +822,17 @@ void GLWidget::setFramePos(double t)
 {
     tForFrame = t;
     scene.setFramePos(startPoint, tForFrame);
+    updateGL();
+}
+
+void GLWidget::showFrame(bool isToggled)
+{
+    isFrame = isToggled;
+    updateGL();
+}
+
+void GLWidget::showCube(bool isToggled)
+{
+    isCube = isToggled;
     updateGL();
 }
