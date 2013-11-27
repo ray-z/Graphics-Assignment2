@@ -224,7 +224,10 @@ void Scene::drawSpline()
         }
     }
     glEnd();
-    drawFrame(1,0);
+    for(int i = 1; i < numP-2; i++)
+    {
+        drawFrame(i,0);
+    }
 }
 
 void Scene::drawFrame(int i, double t)
@@ -237,42 +240,41 @@ void Scene::drawFrame(int i, double t)
 
     // V = 3*A*t*t + 2*B*t + C
     // Q = 6*A*t + 2*B
-    QVector3D vectorV, vectorQ;
+    QVector3D vectorV, vectorQ, vectorVQ, vectorVQV;
     vectorV = 3*vectorA*t*t + 2*vectorB*t + vectorC;
     vectorQ = 6*vectorA*t + 2*vectorB;
-
+    vectorVQ = vectorVQ.crossProduct(vectorV, vectorQ);
+    vectorVQV = vectorVQV.crossProduct(vectorVQ, vectorV);
     // T = V/|V|
+    // B = V*Q/|V*Q|
     // N = V*Q*V/|V*Q*V|
-    // B = T*N
     // Not a real vector, to store point position only
     QVector3D pointT, pointN, pointB;
     pointT = vectorV.normalized();
-    pointN = (vectorV*vectorQ*vectorV).normalized();
-    pointB = pointT * pointN;
-
+    pointB = vectorVQ.normalized();
+    pointN = vectorVQV.normalized();
 
     // Draw Frenet Frame
     QVector3D pPos = getPointPos(i, t);
     glLineWidth(2);
-    // T
+    // T: Red
     glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_LINES);
     glVertex3f(pPos.x(), pPos.y(), pPos.z());
     glVertex3f(pPos.x()+pointT.x(), pPos.y()+pointT.y(), pPos.z()+pointT.z());
     glEnd();
-    // N
+    // B: Green
     glColor3f(0.0, 1.0, 0.0);
-    glBegin(GL_LINES);
-    glVertex3f(pPos.x(), pPos.y(), pPos.z());
-    glVertex3f(pPos.x()+pointN.x(), pPos.y()+pointN.y(), pPos.z()+pointN.z());
-    glEnd();
-    // B
-    glColor3f(0.0, 0.0, 1.0);
     glBegin(GL_LINES);
     glVertex3f(pPos.x(), pPos.y(), pPos.z());
     glVertex3f(pPos.x()+pointB.x(), pPos.y()+pointB.y(), pPos.z()+pointB.z());
     glEnd();
-
+    // N: Blue
+    glColor3f(0.0, 0.0, 1.0);
+    glBegin(GL_LINES);
+    glVertex3f(pPos.x(), pPos.y(), pPos.z());
+    glVertex3f(pPos.x()+pointN.x(), pPos.y()+pointN.y(), pPos.z()+pointN.z());
+    glEnd();
 
 
     /*
