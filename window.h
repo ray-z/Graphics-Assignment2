@@ -63,6 +63,9 @@ private slots:
     void showFrame(bool isToggled);
     // Show Cube
     void showCube(bool isToggled);
+    // Show Cylinder
+    void showCylinder(bool isToggled);
+
 protected:
     void resizeEvent(QResizeEvent * );
 };

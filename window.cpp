@@ -163,3 +163,8 @@ void Window::showCube(bool isToggled)
 {
     m_glWidget->showCube(isToggled);
 }
+
+void Window::showCylinder(bool isToggled)
+{
+    m_glWidget->showCylinder(isToggled);
+}

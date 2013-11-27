@@ -40,6 +40,7 @@
         <height>580</height>
        </rect>
       </property>
+      <zorder>tool_box</zorder>
      </widget>
     </widget>
    </item>
@@ -58,7 +59,7 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>470</y>
+        <y>480</y>
         <width>61</width>
         <height>20</height>
        </rect>
@@ -383,7 +384,7 @@ color: rgb(0, 0, 255);</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>500</y>
+        <y>510</y>
         <width>131</width>
         <height>61</height>
        </rect>
@@ -396,9 +397,9 @@ color: rgb(0, 0, 255);</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>390</y>
+        <y>370</y>
         <width>160</width>
-        <height>80</height>
+        <height>100</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -439,6 +440,13 @@ color: rgb(0, 0, 255);</string>
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Show Cylinder</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -728,7 +736,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>184</x>
-     <y>472</y>
+     <y>449</y>
     </hint>
     <hint type="destinationlabel">
      <x>212</x>
@@ -744,7 +752,7 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>155</x>
-     <y>413</y>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>211</x>
@@ -760,11 +768,27 @@ color: rgb(0, 0, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>93</x>
-     <y>438</y>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>212</x>
      <y>456</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>frmMain</receiver>
+   <slot>showCylinder(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>152</x>
+     <y>463</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>210</x>
+     <y>484</y>
     </hint>
    </hints>
   </connection>
@@ -790,5 +814,6 @@ color: rgb(0, 0, 255);</string>
   <slot>moveFrame(int)</slot>
   <slot>showFrame(bool)</slot>
   <slot>showCube(bool)</slot>
+  <slot>showCylinder(bool)</slot>
  </slots>
 </ui>

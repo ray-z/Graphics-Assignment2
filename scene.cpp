@@ -4,7 +4,7 @@ Scene::Scene()
 {
 }
 
-void Scene::init(bool f, double x, double y, double z, bool isFrame, bool isCube)
+void Scene::init(bool f, double x, double y, double z, bool isFrame, bool isCube, bool isCylinder)
 {
     isFilled = f;
     xangle = x;
@@ -12,6 +12,7 @@ void Scene::init(bool f, double x, double y, double z, bool isFrame, bool isCube
     zangle = z;
     showFrame = isFrame;
     showCube = isCube;
+    showCylinder = isCylinder;
 }
 
 void Scene::draw()
@@ -33,7 +34,7 @@ int Scene::getPointsL()
     return points.length();
 }
 
-void Scene::setFramePos(int i, double t)
+void Scene::setFramePos( double t)
 {
     //pointIndex = i;
     tForFrame = t;
@@ -296,9 +297,11 @@ void Scene::drawFrame(double sliderT)
     glVertex3f(pPos.x()+pointN.x(), pPos.y()+pointN.y(), pPos.z()+pointN.z());
     glEnd();
 
-    // showCube
-    qDebug() << showCube;
+    // show Cube
     if(showCube) drawCube(pPos, pointT, pointB, pointN);
+
+    // show Cylinder
+    if(showCylinder) drawCylinder();
 
     /*
     int numP = points.length();
@@ -420,6 +423,10 @@ void Scene::drawCube(QVector3D vCentre, QVector3D vT, QVector3D vB, QVector3D vN
     glEnd();
 }
 
+void Scene::drawCylinder()
+{
+    qDebug() << "hit here";
+}
 
 int Scene::isSelected(int cMode, double h, double v)
 {

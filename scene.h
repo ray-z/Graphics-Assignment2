@@ -16,7 +16,7 @@ public:
 
     // Initialise a scene
     void init(bool isFilled, double xangle, double yangle, double zangle,
-              bool isFrame, bool isCube);
+              bool isFrame, bool isCube, bool isCylinder);
     // Make dice, draw ground and axis
     void draw();
     // Add/Select/Delete points in scene
@@ -32,7 +32,7 @@ public:
     // Get total points length
     int getPointsL();
     // Set Frame position
-    void setFramePos(int i, double t);
+    void setFramePos( double t);
 
 
 private:
@@ -65,8 +65,12 @@ private:
     // Draw cube w.r.t Frenet Frame
     void drawCube(QVector3D vCentre, QVector3D vT, QVector3D vB, QVector3D vN);
 
+    // Draw Cylinder
+    void drawCylinder();
+
+
     // on/off frame and cube
-    bool showFrame, showCube;
+    bool showFrame, showCube, showCylinder;
 
     // select point index
     int selectedPoint;

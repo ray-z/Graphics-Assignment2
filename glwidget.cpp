@@ -115,7 +115,7 @@ void GLWidget::initializeGL()
     glEnable( GL_CULL_FACE );  	// don't need Z testing for convex objects
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
     //glEnable(GL_COLOR_MATERIAL);
-    //initLight();
+    initLight();
     // No display list in this simple version
     //object = makeDice( );	// Generate an OpenGL display list
 }
@@ -155,7 +155,7 @@ void GLWidget::paintGL()
    // glCallList( object );   no display list this version just make the cube
     //drawGround();
     //makeDice();
-    scene.init(filled, xangle, yangle, zangle, isFrame, isCube);
+    scene.init(filled, xangle, yangle, zangle, isFrame, isCube, isCylinder);
     scene.draw();
 
 }
@@ -504,6 +504,8 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
         {
             switch (mMode)
             {
+            /*
+            // case 0 is removed, 'move point' acts same as 'select poing'
             case 0: // Select Point
             {
                 startPoint = scene.isSelected(cMode, widgetX, widgetY);
@@ -511,6 +513,7 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
 
             }
                 break;
+            */
             case 1: // Add point
             {
                 scene.addPoint(cMode, widgetX, widgetY);
@@ -532,8 +535,8 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
                 {
                     scene.deletePoint(selectedPoint);
                     // Remove Frenet Frame
-                    startPoint = 0;
-                    scene.setFramePos(0, 0);
+                    //startPoint = 0;
+                    //scene.setFramePos(0, 0);
                 }
             }
                 break;
@@ -820,8 +823,8 @@ void GLWidget::setLookTo(double x, double y, double z)
 
 void GLWidget::setFramePos(double t)
 {
-    tForFrame = t;
-    scene.setFramePos(startPoint, tForFrame);
+    //tForFrame = t;
+    scene.setFramePos(t);
     updateGL();
 }
 
@@ -834,5 +837,11 @@ void GLWidget::showFrame(bool isToggled)
 void GLWidget::showCube(bool isToggled)
 {
     isCube = isToggled;
+    updateGL();
+}
+
+void GLWidget::showCylinder(bool isToggled)
+{
+    isCylinder = isToggled;
     updateGL();
 }

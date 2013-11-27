@@ -62,8 +62,10 @@ public:
 
     // Show Frame
     void showFrame(bool isToggled);
-    void showCube(bool isToggled);
     // Show Cube
+    void showCube(bool isToggled);
+    // Show Cylinder
+    void showCylinder(bool isToggled);
     // Set t for Frame
     void setFramePos(double t);
 
@@ -162,10 +164,11 @@ private:
     int selectedPoint;
 
     // These two decide frame position
-    int startPoint;
-    double tForFrame;
+    //int startPoint;
+    //double tForFrame;
     bool isFrame;
     bool isCube;
+    bool isCylinder;
     // set look to
     void setLookTo(double x, double y, double z);
 };
