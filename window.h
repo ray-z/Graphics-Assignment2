@@ -57,7 +57,8 @@ private slots:
     // Only orthogonal view allows control points
     void enablePtMode();
     void disablePtMode();
-
+    // Send t to widget
+    void moveFrame(int i);
 protected:
     void resizeEvent(QResizeEvent * );
 };

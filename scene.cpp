@@ -10,7 +10,6 @@ void Scene::init(bool f, double x, double y, double z)
     xangle = x;
     yangle = y;
     zangle = z;
-
 }
 
 void Scene::draw()
@@ -18,7 +17,7 @@ void Scene::draw()
     makeDice();
     drawGround();
     drawPoints();
-    //drawFrame();
+    drawFrame(pointIndex, tForFrame);
 
 }
 
@@ -30,6 +29,12 @@ QVector3D Scene::getSelectedPoint(int i)
 int Scene::getPointsL()
 {
     return points.length();
+}
+
+void Scene::setFramePos(int i, double t)
+{
+    pointIndex = i;
+    tForFrame = t;
 }
 
 GLuint Scene::makeDice()
@@ -224,14 +229,11 @@ void Scene::drawSpline()
         }
     }
     glEnd();
-    for(int i = 1; i < numP-2; i++)
-    {
-        drawFrame(i,0);
-    }
 }
 
 void Scene::drawFrame(int i, double t)
 {
+    if(i < 1 || i >= points.length()-2) return;
     // Catmull-Rom Spline Equation: P = A*t*t*t + B*t*t + C*t + D;
     QVector3D vectorA, vectorB, vectorC;
     vectorA = (-0.5*points.at(i-1) + 1.5*points.at(i) - 1.5*points.at(i+1) + 0.5*points.at(i+2));

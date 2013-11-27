@@ -30,6 +30,9 @@ public:
     QVector3D getSelectedPoint(int i);
     // Get total points length
     int getPointsL();
+    // Set Frame position
+    void setFramePos(int i, double t);
+
 
 private:
     // Draw grid ground
@@ -46,18 +49,17 @@ private:
     QList<QVector3D> points;
 
     void drawPoints();
+    // Draw Catmull-Rom Spline
     void drawSpline();
+    // Draw Frenet Frame at selected point
     void drawFrame(int i, double t);
 
     //Points on the Catmull-Rom spline
     QVector3D getPointPos(int i, double t);
 
-    // P(x, y, z)
-    // A, B, C, D are different to x, y, z
-    // i = 0, 1, 2 refers to x, y z
-    double getMatrix(int pointIndex);
-    double getB(int pointIndex);
-    double getC(int pointIndex);
+    // Store Frame position
+    int pointIndex;
+    double tForFrame;
 };
 
 #endif // SCENE_H

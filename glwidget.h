@@ -60,6 +60,9 @@ public:
     // Different mouse mode
     void setMouseMode(int i);
 
+    // Set t for Frame
+    void setFramePos(double t);
+
 protected:
     //Initialize the OpenGL Graphics Engine
     void initializeGL();
@@ -74,8 +77,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
-    // Draw ground
-    //void paintEvent(QPaintEvent *);
 
 private:
     void startup();
@@ -156,6 +157,9 @@ private:
 
     int selectedPoint;
 
+    // These two decide frame position
+    int startPoint;
+    double tForFrame;
     // set look to
     void setLookTo(double x, double y, double z);
 };

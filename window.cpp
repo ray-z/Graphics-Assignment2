@@ -133,6 +133,7 @@ void Window::deletePt()
 
 void Window::enablePtMode()
 {
+    this->rb_ctrlCamera->setEnabled(true);
     this->rb_addPt->setEnabled(true);
     this->rb_movePt->setEnabled(true);
     this->rb_deletePt->setEnabled(true);
@@ -140,10 +141,15 @@ void Window::enablePtMode()
 
 void Window::disablePtMode()
 {
+    this->rb_ctrlCamera->setEnabled(false);
     this->rb_addPt->setEnabled(false);
     this->rb_movePt->setEnabled(false);
     this->rb_deletePt->setEnabled(false);
 
-    this->rb_ctrlCamera->setChecked(true);
     ctrlCamera();
+}
+
+void Window::moveFrame(int i)
+{
+    m_glWidget->setFramePos(i/100.0);
 }
