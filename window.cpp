@@ -114,7 +114,7 @@ void Window::rightView()
 
 void Window::ctrlCamera()
 {
-    m_glWidget->setMouseMode(0);
+    m_glWidget->setPerspectiveView();
 }
 
 void Window::addPt()
@@ -142,11 +142,9 @@ void Window::enablePtMode()
 
 void Window::disablePtMode()
 {
-
     this->rb_addPt->setEnabled(false);
     this->rb_movePt->setEnabled(false);
     this->rb_deletePt->setEnabled(false);
-
     ctrlCamera();
 }
 

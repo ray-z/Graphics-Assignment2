@@ -40,7 +40,6 @@
         <height>580</height>
        </rect>
       </property>
-      <zorder>tool_box</zorder>
      </widget>
     </widget>
    </item>

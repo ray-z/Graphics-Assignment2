@@ -5,6 +5,7 @@
 #include <QList>
 #include <math.h>
 #include <QMatrix4x3>
+#include <GL/glu.h>
 
 const double halfLength=0.8;    // half length of cube sides
 const double selectAccuracy=0.2;    // different range allowed between mouse pointer and point
@@ -57,6 +58,9 @@ private:
 
     //Points on the Catmull-Rom spline
     QVector3D getPointPos(int i, double t);
+
+    // Return a list contains: P(point on spline), T, B, N
+    QList<QVector3D> getPTBN(int i, double t);
 
     // Store Frame position
     //int pointIndex;
