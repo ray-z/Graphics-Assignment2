@@ -531,7 +531,6 @@ void Scene::drawCylinder()
     glColor3f(0.0, 1.0, 1.0);
     QVector3D zAxis(0, 0, 1);
     GLUquadricObj *quadratic;
-    quadratic = gluNewQuadric();
     for(int i=1; i<points.length()-2; i++)
     {
         for(double t=0; t<1; t+=0.02)
@@ -543,11 +542,18 @@ void Scene::drawCylinder()
             QVector3D rotateV = rotateV.crossProduct(zAxis, vT);
             double angle = acos(zAxis.dotProduct(zAxis, vT)) * 180.0 / M_PI;
             glPushMatrix();
+            // Translate to point
             glTranslatef(vP.x(), vP.y(), vP.z());
+            // Rotate towards T of that point
             glRotatef(angle, rotateV.x(), rotateV.y(), rotateV.z());
-
+            // Draw cylinder
+            quadratic = gluNewQuadric();
+            gluQuadricDrawStyle( quadratic, GLU_FILL );
+            gluQuadricNormals( quadratic, GLU_SMOOTH );
             gluCylinder(quadratic,0.1f,0.1f,0.2f,32,32);
+            glFlush();
             glPopMatrix();
+
         }
     }
 
