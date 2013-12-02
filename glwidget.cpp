@@ -146,7 +146,7 @@ void GLWidget::paintGL()
         glOrtho(-5.0f, 5.0f, -5.0f, 5.0f, 0.0f, 1500.0f);
     glMatrixMode( GL_MODELVIEW );
     */
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
     gluLookAt(xfrom,yfrom,zfrom, xto, yto, zto, xup, yup, zup);
@@ -181,37 +181,6 @@ void GLWidget::resizeGL(int w, int h )
 
 }
 
-/*
-void GLWidget::about()
-{
-    QString vnum;
-    QString mess, notes;
-    QString title="QtOpenGl-2 ";
-
-    vnum.setNum (version );
-    mess="Simple OpenGl and Qt by Brian Wyvill Release Version: ";
-    mess = mess+vnum;
-    notes = "\n\n News: No News.";
-    mess = mess+notes;
-    QMessageBox::information( this, title, mess, QMessageBox::Ok );
-}
-
-void GLWidget::help()
-{
-    QString vnum;
-    QString mess, notes;
-    QString title="Cube ";
-
-    vnum.setNum ( version );
-    mess="Simple Interface to openGl and Qt by Brian Wyvill Release Version: ";
-    mess = mess+vnum;
-    notes = "\nThis version driven from the GLwidget. \n \
-            Draws a cube, allows crude camera control and Euler angle rotations \n   ";
-    mess = mess+notes;
-    QMessageBox::information( this, title, mess, QMessageBox::Ok );
-}
-*/
-
 void GLWidget::initLight()
 {
     GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -243,209 +212,11 @@ void GLWidget::initLight()
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
-    // glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     // glDisable(GL_LIGHTING);
 
 }
 
-/*
-GLuint GLWidget::makeDice( )
-{
-
-
-    GLuint list;
-    float w = halfLength;
-
-    // list = glGenLists( 1 );
-    // glNewList( list, GL_COMPILE );   no display list this version
-
-    // Rotation
-    glRotatef( xangle, 1.0, 0.0, 0.0 );
-    glRotatef( yangle, 0.0, 1.0, 0.0 );
-    glRotatef( zangle, 0.0, 0.0, 1.0 );
-
-    // one
-    drawFace(0,  w);
-
-    // six
-    glPushMatrix();
-    glRotatef( 180.0, 1.0, 0.0, 0.0 );
-    drawFace(5, w);
-    glPopMatrix();
-
-    // four on left
-    glPushMatrix();
-    glRotatef( -90.0, 0.0, 1.0, 0.0 );
-    drawFace(3, w);
-    glPopMatrix();
-
-    // three on right
-    glPushMatrix();
-    glRotatef( 90.0, 0.0, 1.0, 0.0 );
-    drawFace(2, w);
-    glPopMatrix();
-
-    // two
-    glPushMatrix();
-    glRotatef( 90.0, 1.0, 0.0, 0.0 );
-    drawFace(1, w);
-    glPopMatrix();
-
-    // five
-    glPushMatrix();
-    glRotatef( -90.0, 1.0, 0.0, 0.0 );
-    drawFace(4, w);
-    glPopMatrix();
-
-  //  glEndList();
-
-  //  return list;
-    return 0;
-}
-
-void GLWidget::drawFace( int tim, float w)
-{
-    // this version no texturing
- //   glTexImage2D( GL_TEXTURE_2D, 0, 3, tex[tim].width(), tex[tim].height(), 0,
-           //       GL_RGBA, GL_UNSIGNED_BYTE, tex[tim].bits() );
-    glOrtho(1.15, 1.15, -1.0f, 1.0f, -1.0f, 1.0f);
-    glLineWidth(2);
-    if (filled) glBegin( GL_POLYGON ); else glBegin( GL_LINE_LOOP );
-    //glTexCoord2f(0.0, 0.0);
-
-    glColor3f(1.0, 0.0, 0.0);
-    glVertex3f(-w, -w, w );
-   // glTexCoord2f(0.0, 1.0);
-    glVertex3f(w, -w, w );
-    //glTexCoord2f(1.0, 1.0);
-    glVertex3f(w, w, w );
-    //glTexCoord2f(1.0, 0.0);
-    glVertex3f(-w, w, w );
-
-    glEnd();
-
-}
-
-void GLWidget::drawGround()
-{
-    // Draw axis
-    glLineWidth(3);
-    glColor3f(0.0, 0.0, 0.0);
-
-    glBegin(GL_LINES);
-    // X axis
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(5.0, 0.0, 0.0);
-    // Y axis
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0, 5.0, 0.0);
-    // Z axis
-    glVertex3f(0.0, 0.0, 0.0);
-    glVertex3f(0.0, 0.0, 5.0);
-    glEnd();
-
-    // Draw ground
-    glLineWidth(1);
-    glColor3f(1.0, 1.0, 1.0);
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(-10.0, 0.0, -10.0);
-    glVertex3f(10.0, 0.0, -10.0);
-    glVertex3f(10.0, 0.0, 10.0);
-    glVertex3f(-10.0, 0.0, 10.0);
-    glEnd();
-
-    // Draw grid
-    glBegin(GL_LINES);
-    for(double i=-10; i<10; i+=0.5)
-    {
-        // x
-        glVertex3f(-10.0, 0.0, i);
-        glVertex3f(10.0, 0.0, i);
-        // z
-        glVertex3f(i, 0.0, -10.0);
-        glVertex3f(i, 0.0, 10.0);
-    }
-    glEnd();
-
-
-}
-*/
-/*
-void GLWidget::makeSpots(int tim, QImage *buf)
-{
-  int r=255, g=0, b=0;
-  int rad=25;
-  int w,h,i,j;
-
-  w=buf->width();
-  h=buf->height();
-
-  // set red
-  for (i=0; i<buf->width(); i++)
-    for (j=0; j<buf->height(); j++)
-      buf->setPixel(i,j, qRgb(r, g, b));
-
-  switch(tim) {
-  case 0: // value 1
-    drawCircle(rad, w/2, h/2, buf);
-    break;
-
-  case 1: // value 2
-    drawCircle(rad, w/4, h/4, buf);
-    drawCircle(rad, 3*w/4, 3*h/4, buf);
-    break;
-
-
-  case 2: // value 3
-    drawCircle(rad, w/4, h/4, buf);
-    drawCircle(rad, w/2, h/2, buf);
-    drawCircle(rad, 3*w/4, 3*h/4, buf);
-    break;
-
-  case 3: // value 4
-    drawCircle(rad, w/4, h/4, buf);
-    drawCircle(rad, w/4, 3*h/4, buf);
-    drawCircle(rad, 3*w/4, 3*h/4, buf);
-    drawCircle(rad, 3*w/4, h/4, buf);
-    break;
-
-  case 4: // value 5
-    drawCircle(rad, w/4, h/4, buf);
-    drawCircle(rad, w/4, 3*h/4, buf);
-    drawCircle(rad, w/2, h/2, buf);
-    drawCircle(rad, 3*w/4, 3*h/4, buf);
-    drawCircle(rad, 3*w/4, h/4, buf);
-    break;
-
-  case 5: // value 6
-    drawCircle(rad, w/4, h/4, buf);
-    drawCircle(rad, w/4, h/2, buf);
-    drawCircle(rad, w/4, 3*h/4, buf);
-
-    drawCircle(rad, 3*w/4, h/4, buf);
-    drawCircle(rad, 3*w/4, h/2, buf);
-    drawCircle(rad, 3*w/4, 3*h/4, buf);
-    break;
-
-  default: std::cerr << " big oopsy \n";
-    break;
-
-  }
-}
-
-void GLWidget::drawCircle(int radius, int xcen, int ycen,  QImage *buf)
-{
-    int i,j,r2;
-
-    r2=radius*radius;
-
-    for(i=xcen-radius; i<xcen+radius; i++)
-    for(j=ycen-radius; j<ycen+radius; j++) {
-      if  ( (i-xcen)*(i-xcen) + (j-ycen)*(j-ycen) < r2)
-        buf->setPixel(i,j,qRgb(255, 255, 255));
-    }
-}
-*/
 // communication with the window widget
 void GLWidget::rotx(int a)
 {
@@ -543,13 +314,6 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
                 break;
             }
         }
-        /*
-        mouseX = e->pos().x();
-        mouseY = e->pos().y();
-
-        // get current radius
-        radius = sqrt(pow(xfrom, 2.0) + pow(yfrom, 2.0) + pow(zfrom, 2.0));
-        */
     }
     else if(e->buttons()==Qt::RightButton)
     {
@@ -575,38 +339,6 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
             QVector3D p = scene.getSelectedPoint(selectedPoint);
             setLookTo(p.x(), p.y(), p.z());
         }
-
-        // Change view point
-        // All view points are pre-defined
-        // View point is chosed by cycling through list
-//        xto = viewPoints.at(0).at(0);
-//        yto = viewPoints.at(0).at(1);
-//        zto = viewPoints.at(0).at(2);
-//        viewPoints.pop_front();
-//        viewPoints.append(viewPoints.at(0));
-
-//        // Switch between:
-//        // Look at current selected point and
-//        // (0, 0, 0)
-//        if(selectedPoint != -1)
-//        {
-//            if(isLookToCenter)
-//            {
-//                QVector3D p = scene.getSelectedPoint(selectedPoint);
-//                setLookTo(p.x(), p.y(), p.z());
-//                isLookToCenter = false;
-//            }
-//            else
-//            {
-//                setLookTo(0,0,0);
-//                isLookToCenter = true;
-//            }
-//        }
-//        else
-//        {
-//            setLookTo(0,0,0);
-//            isLookToCenter = true;
-//        }
 
     }
     updateGL();
@@ -649,57 +381,6 @@ void GLWidget::mouseMoveEvent ( QMouseEvent *e )
                 }
             }
         }
-        /*
-        switch (cMode)
-        {
-        case 0:
-        {
-            angle += diffX * mouseSpeed;
-            elevation += diffY * mouseSpeed;
-
-            QList<double> cameraP = getCameraPosition();
-            xfrom = cameraP.at(0);
-            yfrom = cameraP.at(1);
-            zfrom = cameraP.at(2);
-        }
-            break;
-        case 1:
-        {
-            //selectedPoint << scene.isSelected(cMode, widgetX, widgetY);
-            qDebug() << "selectedPoint: " << selectedPoint;
-            if(selectedPoint != -1)
-                scene.movePoint(cMode, selectedPoint, diffX * mouseSpeed, diffY * mouseSpeed);
-            //xfrom += diffX * mouseSpeed;
-            //zfrom += diffY * mouseSpeed;
-
-        }
-            break;
-        case 2:
-        {
-            xfrom += diffX * mouseSpeed;
-            yfrom += diffY * mouseSpeed;
-
-        }
-            break;
-        case 3:
-        {
-            zfrom += diffX * mouseSpeed;
-            yfrom += diffY * mouseSpeed;
-
-        }
-            break;
-
-        }
-        */
-        /*
-        angle += diffX * mouseSpeed;
-        elevation += diffY * mouseSpeed;
-
-        QList<double> cameraP = getCameraPosition();
-        xfrom = cameraP.at(0);
-        yfrom = cameraP.at(1);
-        zfrom = cameraP.at(2);
-        */
         mouseX = e->pos().x();
         mouseY = e->pos().y();
     }
@@ -798,15 +479,7 @@ void GLWidget::setRightView()
     xfrom = 50.0;
     xup = zup = 0.0;
     yup = 1.0;
-    /*
-    scene.addPoint(-0.5, 0.5, 1);
-    scene.addPoint(-0.5, 0.2, 0.5);
-    scene.addPoint(0, 0.5, 0);
-    scene.addPoint(0.1, 0.3, -0.5);
-    scene.addPoint(0.5, 0.5, -1);
-    scene.addPoint(0.7, 0.9, -1.3);
-    scene.addPoint(1.5, 1.2, -1);
-    */
+
     updateGL();
 }
 
@@ -824,7 +497,6 @@ void GLWidget::setLookTo(double x, double y, double z)
 
 void GLWidget::setFramePos(double t)
 {
-    //tForFrame = t;
     scene.setFramePos(t);
     updateGL();
 }

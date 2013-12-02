@@ -72,7 +72,6 @@ private:
     // Draw Cylinder
     void drawCylinder();
 
-
     // on/off frame and cube
     bool showFrame, showCube, showCylinder;
 

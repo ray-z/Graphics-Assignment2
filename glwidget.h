@@ -107,10 +107,6 @@ private:
 
     // Functions
     void redraw();
-    //void makeSpots(int tim, QImage *buf);
-    //void drawCircle(int radius, int xcen, int ycen,  QImage *buf);
-    //void drawFace( int tim, float w);
-    //GLuint makeDice( );
     void initLight();
 
     // Store mouse x, y positions when click
@@ -152,22 +148,18 @@ private:
      * 2 - Move Point
      * 3 - Delete Point
     */
+    int mMode;
 
     // Set init ortognal view
     void setOrthoView();
 
-    int mMode;
+
 
     // up vector
     float xup, yup, zup;
 
     Scene scene;
-
     int selectedPoint;
-
-    // These two decide frame position
-    //int startPoint;
-    //double tForFrame;
     bool isFrame;
     bool isCube;
     bool isCylinder;

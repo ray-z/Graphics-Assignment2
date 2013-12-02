@@ -134,10 +134,10 @@ void Window::deletePt()
 
 void Window::enablePtMode()
 {
-
     this->rb_addPt->setEnabled(true);
     this->rb_movePt->setEnabled(true);
     this->rb_deletePt->setEnabled(true);
+    disableCameraMove();
 }
 
 void Window::disablePtMode()
@@ -146,6 +146,7 @@ void Window::disablePtMode()
     this->rb_movePt->setEnabled(false);
     this->rb_deletePt->setEnabled(false);
     ctrlCamera();
+    enableCameraMove();
 }
 
 void Window::moveFrame(int i)
@@ -193,4 +194,22 @@ void Window::disableChkbox()
     this->chkbox_cube->setChecked(false);
     this->chkbox_cylinder->setChecked(false);
 
+}
+
+void Window::enableCameraMove()
+{
+    this->spinBoxX->setEnabled(true);
+    this->spinBoxY->setEnabled(true);
+    this->spinBoxZ->setEnabled(true);
+}
+
+void Window::disableCameraMove()
+{
+    this->spinBoxX->setEnabled(false);
+    this->spinBoxY->setEnabled(false);
+    this->spinBoxZ->setEnabled(false);
+
+    this->spinBoxX->setValue(0);
+    this->spinBoxY->setValue(0);
+    this->spinBoxZ->setValue(0);
 }

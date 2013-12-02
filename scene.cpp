@@ -254,44 +254,13 @@ void Scene::drawFrame(double sliderT)
     int i = sliderT/unitL + 1;
     double t = (sliderT - unitL*(i-1)) / unitL;
 
-    // convert sliderT to t
-    //double unitL = 1.0 / (points.length()-3);
-    //int i = sliderT/unitL + 1;
-    //double t = (sliderT - unitL*(i-1)) / unitL;
-
     QList<QVector3D> listTBN = getPTBN(i, t);
     QVector3D pPos = listTBN.at(0);
     QVector3D pointT = listTBN.at(1);
     QVector3D pointN = listTBN.at(2);
     QVector3D pointB = listTBN.at(3);
 
-    /*
-    // Catmull-Rom Spline Equation: P = A*t*t*t + B*t*t + C*t + D;
-    QVector3D vectorA, vectorB, vectorC;
-    vectorA = (-0.5*points.at(i-1) + 1.5*points.at(i) - 1.5*points.at(i+1) + 0.5*points.at(i+2));
-    vectorB = (points.at(i-1) - 2.5*points.at(i) + 2*points.at(i+1) - 0.5*points.at(i+2));
-    vectorC = (-0.5*points.at(i-1)+0.5*points.at(i+1));
-
-    // V = 3*A*t*t + 2*B*t + C
-    // Q = 6*A*t + 2*B
-    QVector3D vectorV, vectorQ, vectorVQ, vectorVQV;
-    vectorV = 3*vectorA*t*t + 2*vectorB*t + vectorC;
-    vectorQ = 6*vectorA*t + 2*vectorB;
-    vectorVQ = vectorVQ.crossProduct(vectorV, vectorQ);
-    vectorVQV = vectorVQV.crossProduct(vectorVQ, vectorV);
-    // T = V/|V|
-    // B = V*Q/|V*Q|
-    // N = V*Q*V/|V*Q*V|
-    // Not a real vector, to store point position only
-    QVector3D pointT, pointN, pointB;
-    pointT = vectorV.normalized();
-    pointB = vectorVQ.normalized();
-    pointN = vectorVQV.normalized();
-    */
-
-
     // Draw Frenet Frame
-    //QVector3D pPos = getPointPos(i, t);
     glLineWidth(2);
     // T: Red
     glColor3f(1.0, 0.0, 0.0);
@@ -312,118 +281,8 @@ void Scene::drawFrame(double sliderT)
     glVertex3f(pPos.x()+pointN.x(), pPos.y()+pointN.y(), pPos.z()+pointN.z());
     glEnd();
 
-    // test
-//    glBegin(GL_POINTS);
-//    QVector3D q(pointN.x(), pointN.y(), pointN.z());
-//    QMatrix4x4 m;
-
-//    for(double d=0; d < 360; d++)
-//    {
-
-//        m.rotate(d, pointT.x(), pointT.y(), pointT.z());
-//        q = q*m;
-
-//        glVertex3f(q.x()+pPos.x(), q.y()+pPos.y(), q.z()+pPos.z());
-//    }
-//    glEnd();
-
-//    QVector3D zAxis(0, 0, 1);
-//    QVector3D testX2(pointT.x(), 0, pointT.z());
-//    QVector3D yAxis(0, 1, 0);
-//    QVector3D testX2(0, pointT.y(), pointT.z());
-//    double angleX = qAcos(testX.dotProduct(testX, pointT)) * 180 / 3.14;
-//    double angleY = qAcos(testY.dotProduct(testY, pointT)) * 180 / 3.14;
-//    QVector3D zV(0, 0, 1);
-//    QVector3D testP(1, 0, 1);
-//    QVector3D xzV(pointT.x(), pointT.y(), pointT.z());
-//    QVector3D yzV(pointT.x(), pointT.y(), pointT.z());
-//    qDebug() << testP.dotProduct(zV, testP) * 180 / 3.14;
-//    double zxAngle = acos(zV.dotProduct(zV, xzV)) * 180 / 3.14;
-//    double zyAngle = acos(zV.dotProduct(zV, yzV)) * 180 / 3.14;
-
-//    GLUquadricObj *quadratic;
-//    quadratic = gluNewQuadric();
-
-//    glRotatef(zxAngle, 0, 1, 0);
-//    glRotatef(zyAngle, 0, 0,  1);
-    //glTranslatef(pPos.x(), pPos.y(), pPos.z());
-
-//    gluCylinder(quadratic,0.1f,0.1f,3.0f,32,32);
-
-//    QVector3D plane1(3, 5, 0);
-//    double d1 = vectorV.dotProduct(vectorVQ, vectorV);
-//    qDebug() << d1 / (vectorV.length()*vectorVQ.length());
-//    QVector3D plane2(2, 1, 0);
-//    double d = plane1.dotProduct(plane1, plane2);
-//    qDebug() << d / (plane1.length()*plane2.length());
-
     // show Cube
     if(showCube) drawCube(pPos, pointT, pointB, pointN);
-
-    // show Cylinder
-    // test
-
-//    GLUquadricObj *quadratic;
-//    quadratic = gluNewQuadric();
-//    QVector3D zAxis(0, 0, 1);
-//    QVector3D rotateV = rotateV.crossProduct(zAxis, pointT);
-//    double angle = acos(zAxis.dotProduct(zAxis, pointT)) * 180.0 / M_PI;
-//    glTranslatef(pPos.x(), pPos.y(), pPos.z());
-//    glRotatef(angle, rotateV.x(), rotateV.y(), rotateV.z());
-
-//    gluCylinder(quadratic,0.1f,0.1f,1.0f,32,32);
-
-
-
-    /*
-    int numP = points.length();
-    // init a list of x, y, z
-
-    double x[numP], y[numP], z[numP];
-    for(int l = 0; l < numP; l++)
-    {
-        x[l] = points.at(l).at(0);
-        y[l] = points.at(l).at(1);
-        z[l] = points.at(l).at(2);
-    }
-
-    float xv, yv, zv, xt, yt, zt;
-    for(int i = 1; i < numP-2; i++)
-    {
-        double t = 0.5;
-
-        float xa = -0.5*x[i-1] + 1.5*x[i] - 1.5*x[i+1] + 0.5*x[i+2];
-        float xb = x[i-1] - 2.5*x[i] + 2*x[i+1] - 0.5*x[i+2];
-        float xc = -0.5*x[i-1]+0.5*x[i+1];
-
-        float ya = -0.5*y[i-1] + 1.5*y[i] - 1.5*y[i+1] + 0.5*y[i+2];
-        float yb = y[i-1] - 2.5*y[i] + 2*y[i+1] - 0.5*y[i+2];
-        float yc = -0.5*y[i-1]+0.5*y[i+1];
-
-        float za = -0.5*z[i-1] + 1.5*z[i] - 1.5*z[i+1] + 0.5*z[i+2];
-        float zb = z[i-1] - 2.5*z[i] + 2*z[i+1] - 0.5*z[i+2];
-        float zc = -0.5*z[i-1]+0.5*z[i+1];
-        glBegin(GL_LINE_STRIP);
-        for(int i = 1; i < numP-2; i++)
-        {
-            for(int k = 0;  k < 50; k++)    //50 points
-            {
-                double t = k*0.02;  //Interpolation parameter
-                xv = (3*xa*t*t + 2*xb*t + xc);
-                yv = (3*ya*t*t + 2*yb*t + yc);
-                zv = (3*za*t*t + 2*zb*t + zc);
-
-                xt = xv/sqrt(xv*xv + yv*yv + zv*zv);
-                yt = yv/sqrt(xv*xv + yv*yv + zv*zv);
-                zt = zv/sqrt(xv*xv + yv*yv + zv*zv);
-
-            glVertex3f(xt, yt, zt);
-            }
-        }
-        glEnd();
-
-    }
-    */
 }
 
 QList<QVector3D> Scene::getPTBN(int i, double t)
@@ -441,6 +300,7 @@ QList<QVector3D> Scene::getPTBN(int i, double t)
     vectorQ = 6*vectorA*t + 2*vectorB;
     vectorVQ = vectorVQ.crossProduct(vectorV, vectorQ);
     vectorVQV = vectorVQV.crossProduct(vectorVQ, vectorV);
+
     // T = V/|V|
     // B = V*Q/|V*Q|
     // N = V*Q*V/|V*Q*V|
@@ -560,12 +420,14 @@ void Scene::drawCylinder()
     }
 
     /*
+    // An other way of drawing cylinder:
+    // Draw cylinder using a lot circles instead of cylinders.
     glLineWidth(10);
     glColor3f(0.0, 1.0, 1.0);
 
     for(int i=1; i<points.length()-2; i++)
     {
-        for(double t=0; t<1; t+=0.02)
+        for(double t=0; t<1; t+=0.01)
         {
             QList<QVector3D> listPTBN = getPTBN(i, t);
             QVector3D vP = listPTBN.at(0);
@@ -597,8 +459,6 @@ int Scene::isSelected(int cMode, double h, double v)
     {
         for(int i=0; i<points.length(); i++)
         {
-            //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
-
             if(fabs(h - points.at(i).x()) < selectAccuracy &&
                     fabs(-v - points.at(i).z()) < selectAccuracy)
             {
@@ -611,8 +471,6 @@ int Scene::isSelected(int cMode, double h, double v)
     {
         for(int i=0; i<points.length(); i++)
         {
-            //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
-
             if(fabs(h - points.at(i).x()) < selectAccuracy &&
                     fabs(v - points.at(i).y()) < selectAccuracy)
             {
@@ -625,8 +483,6 @@ int Scene::isSelected(int cMode, double h, double v)
     {
         for(int i=0; i<points.length(); i++)
         {
-            //qDebug() << fabs(h - points.at(i).at(0)) << ", " << fabs(v - points.at(i).at(2));
-
             if(fabs(v - points.at(i).y()) < selectAccuracy &&
                     fabs(-h - points.at(i).z()) < selectAccuracy)
             {
@@ -646,21 +502,18 @@ void Scene::movePoint(int cMode, int i, double h, double v)
     {
     case 1: // Top view: x-z (h, 0, -v)
     {
-        //selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) << points.at(i).at(2) + v;
         selectedPoint.setX(selectedPoint.x() + h);
         selectedPoint.setZ(selectedPoint.z() + v);
     }
         break;
     case 2: // Front view: x-y (h, v, 0)
     {
-        //selectedPoint << points.at(i).at(0) + h << points.at(i).at(1) - v << points.at(i).at(2);
         selectedPoint.setX(selectedPoint.x() + h);
         selectedPoint.setY(selectedPoint.y() - v);
     }
         break;
     case 3: // Right view: z-y (0, v, -h)
     {
-        //selectedPoint << points.at(i).at(0) << points.at(i).at(1) - v << points.at(i).at(2) - h;
         selectedPoint.setY(selectedPoint.y() - v);
         selectedPoint.setZ(selectedPoint.z() - h);
     }

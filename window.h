@@ -73,6 +73,10 @@ private slots:
     // Send cylinder radius
     void setRadius(double r);
 
+    // enable/disable camera movement
+    void enableCameraMove();
+    void disableCameraMove();
+
 protected:
     void resizeEvent(QResizeEvent * );
 };
