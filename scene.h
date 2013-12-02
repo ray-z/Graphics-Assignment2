@@ -17,7 +17,7 @@ public:
 
     // Initialise a scene
     void init(bool isFilled, double xangle, double yangle, double zangle,
-              bool isFrame, bool isCube, bool isCylinder);
+              bool isFrame, bool isCube, bool isCylinder, double cylinderR);
     // Make dice, draw ground and axis
     void draw();
     // Add/Select/Delete points in scene
@@ -76,8 +76,11 @@ private:
     // on/off frame and cube
     bool showFrame, showCube, showCylinder;
 
-    // select point index
+    // Select point index
     int selectedPoint;
+
+    // Store cylinder radius
+    double radius;
 };
 
 #endif // SCENE_H

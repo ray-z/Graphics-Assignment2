@@ -70,6 +70,9 @@ private slots:
     void enableChkbox();
     void disableChkbox();
 
+    // Send cylinder radius
+    void setRadius(double r);
+
 protected:
     void resizeEvent(QResizeEvent * );
 };

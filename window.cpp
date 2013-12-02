@@ -170,11 +170,17 @@ void Window::showCylinder(bool isToggled)
     m_glWidget->showCylinder(isToggled);
 }
 
+void Window::setRadius(double r)
+{
+    m_glWidget->setCylinderR(r);
+}
+
 void Window::enableChkbox()
 {
     this->chkbox_cube->setEnabled(true);
     this->chkbox_cylinder->setEnabled(true);
     this->slider_t->setEnabled(true);
+    this->spin_Radius->setEnabled(true);
 }
 
 void Window::disableChkbox()
@@ -182,6 +188,7 @@ void Window::disableChkbox()
     this->chkbox_cube->setEnabled(false);
     this->chkbox_cylinder->setEnabled(false);
     this->slider_t->setEnabled(false);
+    this->spin_Radius->setEnabled(false);
 
     this->chkbox_cube->setChecked(false);
     this->chkbox_cylinder->setChecked(false);

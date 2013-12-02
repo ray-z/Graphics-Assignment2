@@ -67,6 +67,7 @@ void GLWidget::startup()
     radius = 10.0;
     isFrame = false;
     isCube = false;
+    cylinderR = 0.1;
 }
 
 void GLWidget::clear()
@@ -155,7 +156,7 @@ void GLWidget::paintGL()
    // glCallList( object );   no display list this version just make the cube
     //drawGround();
     //makeDice();
-    scene.init(filled, xangle, yangle, zangle, isFrame, isCube, isCylinder);
+    scene.init(filled, xangle, yangle, zangle, isFrame, isCube, isCylinder, cylinderR);
     scene.draw();
 
 }
@@ -843,5 +844,11 @@ void GLWidget::showCube(bool isToggled)
 void GLWidget::showCylinder(bool isToggled)
 {
     isCylinder = isToggled;
+    updateGL();
+}
+
+void GLWidget::setCylinderR(double r)
+{
+    cylinderR = r;
     updateGL();
 }

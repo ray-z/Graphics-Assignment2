@@ -68,6 +68,8 @@ public:
     void showCylinder(bool isToggled);
     // Set t for Frame
     void setFramePos(double t);
+    // Set r for Cylinder
+    void setCylinderR(double r);
 
 protected:
     //Initialize the OpenGL Graphics Engine
@@ -171,6 +173,9 @@ private:
     bool isCylinder;
     // set look to
     void setLookTo(double x, double y, double z);
+
+    // Store cylinder radius
+    double cylinderR;
 };
 
 
