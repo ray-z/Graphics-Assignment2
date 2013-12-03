@@ -29,9 +29,8 @@ private slots:
 
     void endit(){cerr << "goodbye\n"; exit(0);};
     void clear();
-    void aboutBut();
-    void helpBut();
-    void pushmebut();
+    //void aboutBut();
+    //void helpBut();
 
     void xrot(int);
     void yrot(int);
@@ -41,6 +40,38 @@ private slots:
     void yFrom(int);
     void zFrom(int);
     void filledOn(bool);
+
+    // Different camera view postions
+    void perspectiveView();
+    void topView();
+    void frontView();
+    void rightView();
+
+    // Different mouse mode
+    void ctrlCamera();
+    void addPt();
+    void movePt();
+    void deletePt();
+
+    // Reset mouse mode
+    // Only orthogonal view allows control points
+    void enablePtMode();
+    void disablePtMode();
+    // Send t to widget
+    void moveFrame(int i);
+    // Show Frenet Frame
+    void showFrame(bool isToggled);
+    // Show Cube
+    void showCube(bool isToggled);
+    // Show Cylinder
+    void showCylinder(bool isToggled);
+
+    // enable/disable cube and cylinder
+    void enableChkbox();
+    void disableChkbox();
+
+    // Send cylinder radius
+    void setRadius(double r);
 
 protected:
     void resizeEvent(QResizeEvent * );

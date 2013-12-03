@@ -15,12 +15,19 @@
 #include <GL/glu.h>
 #include "version.h"
 #include <QList>
+#include "scene.h"
 
 const int maxw=1024;
 const int maxh=1024;
 const int unitLength=20;    // store unit length of mouse move
-const double halfLength=0.8;    // half length of cube sides
+// const double halfLength=0.8;    // half length of cube sides
 const double mouseSpeed=0.01;
+// mouse coordinate to widget coordinate: (x-xDiff, yDiff-y)
+const double xDiff = 285;
+const double yDiff = 289;
+// coordinate to real length ratio
+const double coordToL = 57;
+
 //This is our OpenGL Component we built it on top of QGLWidget
 class GLWidget : public QGLWidget
 {
@@ -34,8 +41,8 @@ public:
     ~GLWidget();
 
     void clear();
-    void about();
-    void help();
+    //void about();
+    //void help();
     void rotx(int);
     void roty(int);
     void rotz(int);
@@ -43,6 +50,26 @@ public:
     void setyFrom(int a);
     void setzFrom(int a);
     void setFilled(bool a);
+
+    // Different camera view postions
+    void setPerspectiveView();
+    void setTopView();
+    void setFrontView();
+    void setRightView();
+
+    // Different mouse mode
+    void setMouseMode(int i);
+
+    // Show Frame
+    void showFrame(bool isToggled);
+    // Show Cube
+    void showCube(bool isToggled);
+    // Show Cylinder
+    void showCylinder(bool isToggled);
+    // Set t for Frame
+    void setFramePos(double t);
+    // Set r for Cylinder
+    void setCylinderR(double r);
 
 protected:
     //Initialize the OpenGL Graphics Engine
@@ -58,8 +85,6 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
-    // Draw ground
-    //void paintEvent(QPaintEvent *);
 
 private:
     void startup();
@@ -82,10 +107,10 @@ private:
 
     // Functions
     void redraw();
-    void makeSpots(int tim, QImage *buf);
-    void drawCircle(int radius, int xcen, int ycen,  QImage *buf);
-    void drawFace( int tim, float w);
-    GLuint makeDice( );
+    //void makeSpots(int tim, QImage *buf);
+    //void drawCircle(int radius, int xcen, int ycen,  QImage *buf);
+    //void drawFace( int tim, float w);
+    //GLuint makeDice( );
     void initLight();
 
     // Store mouse x, y positions when click
@@ -93,10 +118,10 @@ private:
     int mouseY;
 
     // Draw grid ground
-    void drawGround();
+    //void drawGround();
 
     // A list of 'View to' point
-    QList<QList<double> > viewPoints;
+    QList<QList<double> > viewPoints;   // TODO: remove this
     void initViewPointsList();
     void addViewPoint(double x, double y, double z);
 
@@ -110,8 +135,47 @@ private:
     // Store radius
     double radius;
 
+    // Return a list contains current camera position
     QList<double> getCameraPosition();
 
+    /* Camera Mode:
+     * 0 - Perspective View
+     * 1 - Top View: x-z
+     * 2 - Front View: x-y
+     * 3 - Right View: z-y
+    */
+    int cMode;
+
+    /* Mouse Mode:
+     * 0 - Control Camera
+     * 1 - Add Point
+     * 2 - Move Point
+     * 3 - Delete Point
+    */
+
+    // Set init ortognal view
+    void setOrthoView();
+
+    int mMode;
+
+    // up vector
+    float xup, yup, zup;
+
+    Scene scene;
+
+    int selectedPoint;
+
+    // These two decide frame position
+    //int startPoint;
+    //double tForFrame;
+    bool isFrame;
+    bool isCube;
+    bool isCylinder;
+    // set look to
+    void setLookTo(double x, double y, double z);
+
+    // Store cylinder radius
+    double cylinderR;
 };
 
 
