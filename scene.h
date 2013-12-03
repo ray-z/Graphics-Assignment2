@@ -5,6 +5,7 @@
 #include <QList>
 #include <math.h>
 #include <QMatrix4x3>
+#include <GL/glu.h>
 
 const double halfLength=0.8;    // half length of cube sides
 const double selectAccuracy=0.2;    // different range allowed between mouse pointer and point
@@ -15,7 +16,8 @@ public:
     Scene();
 
     // Initialise a scene
-    void init(bool isFilled, double xangle, double yangle, double zangle);
+    void init(bool isFilled, double xangle, double yangle, double zangle,
+              bool isFrame, bool isCube, bool isCylinder, double cylinderR);
     // Make dice, draw ground and axis
     void draw();
     // Add/Select/Delete points in scene
@@ -31,7 +33,7 @@ public:
     // Get total points length
     int getPointsL();
     // Set Frame position
-    void setFramePos(int i, double t);
+    void setFramePos( double t);
 
 
 private:
@@ -52,14 +54,33 @@ private:
     // Draw Catmull-Rom Spline
     void drawSpline();
     // Draw Frenet Frame at selected point
-    void drawFrame(int i, double t);
+    void drawFrame(double sliderT);
 
     //Points on the Catmull-Rom spline
     QVector3D getPointPos(int i, double t);
 
+    // Return a list contains: P(point on spline), T, B, N
+    QList<QVector3D> getPTBN(int i, double t);
+
     // Store Frame position
-    int pointIndex;
+    //int pointIndex;
     double tForFrame;
+
+    // Draw cube w.r.t Frenet Frame
+    void drawCube(QVector3D vCentre, QVector3D vT, QVector3D vB, QVector3D vN);
+
+    // Draw Cylinder
+    void drawCylinder();
+
+
+    // on/off frame and cube
+    bool showFrame, showCube, showCylinder;
+
+    // Select point index
+    int selectedPoint;
+
+    // Store cylinder radius
+    double radius;
 };
 
 #endif // SCENE_H

@@ -65,6 +65,9 @@ void GLWidget::startup()
     angle = M_PI/4.0;
     elevation = M_PI/4.0;
     radius = 10.0;
+    isFrame = false;
+    isCube = false;
+    cylinderR = 0.1;
 }
 
 void GLWidget::clear()
@@ -153,8 +156,9 @@ void GLWidget::paintGL()
    // glCallList( object );   no display list this version just make the cube
     //drawGround();
     //makeDice();
-    scene.init(filled, xangle, yangle, zangle);
+    scene.init(filled, xangle, yangle, zangle, isFrame, isCube, isCylinder, cylinderR);
     scene.draw();
+
 }
 
 /* 2D */
@@ -497,42 +501,48 @@ void GLWidget::mousePressEvent( QMouseEvent *e )
             // get current radius
             radius = sqrt(pow(xfrom, 2.0) + pow(yfrom, 2.0) + pow(zfrom, 2.0));
         }
-        switch (mMode)
+        else
         {
-        case 0: // Select Point
-        {
-            startPoint = scene.isSelected(cMode, widgetX, widgetY);
-            scene.setFramePos(startPoint, tForFrame);
-
-        } 
-            break;
-        case 1: // Add point
-        {
-            scene.addPoint(cMode, widgetX, widgetY);
-            selectedPoint = scene.getPointsL() - 1;
-        }
-            break;
-        case 2: // Move Point
-        {
-            selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
-            //qDebug() << "selectedPoint: " << selectedPoint;
-        }
-            break;
-        case 3: // Delete Point
-        {
-            selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
-
-            if(selectedPoint != -1)
+            switch (mMode)
             {
-                scene.deletePoint(selectedPoint);
-                // Remove Frenet Frame
-                startPoint = 0;
-                scene.setFramePos(0, 0);
+            /*
+            // case 0 is removed, 'move point' acts same as 'select poing'
+            case 0: // Select Point
+            {
+                startPoint = scene.isSelected(cMode, widgetX, widgetY);
+                scene.setFramePos(startPoint, tForFrame);
+
+            }
+                break;
+            */
+            case 1: // Add point
+            {
+                scene.addPoint(cMode, widgetX, widgetY);
+                selectedPoint = scene.getPointsL() - 1;
+            }
+                break;
+            case 2: // Move Point
+            {
+                selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+
+                //qDebug() << "selectedPoint: " << selectedPoint;
+            }
+                break;
+            case 3: // Delete Point
+            {
+                selectedPoint = scene.isSelected(cMode, widgetX, widgetY);
+
+                if(selectedPoint != -1)
+                {
+                    scene.deletePoint(selectedPoint);
+                    // Remove Frenet Frame
+                    //startPoint = 0;
+                    //scene.setFramePos(0, 0);
+                }
+            }
+                break;
             }
         }
-            break;
-        }
-
         /*
         mouseX = e->pos().x();
         mouseY = e->pos().y();
@@ -814,7 +824,31 @@ void GLWidget::setLookTo(double x, double y, double z)
 
 void GLWidget::setFramePos(double t)
 {
-    tForFrame = t;
-    scene.setFramePos(startPoint, tForFrame);
+    //tForFrame = t;
+    scene.setFramePos(t);
+    updateGL();
+}
+
+void GLWidget::showFrame(bool isToggled)
+{
+    isFrame = isToggled;
+    updateGL();
+}
+
+void GLWidget::showCube(bool isToggled)
+{
+    isCube = isToggled;
+    updateGL();
+}
+
+void GLWidget::showCylinder(bool isToggled)
+{
+    isCylinder = isToggled;
+    updateGL();
+}
+
+void GLWidget::setCylinderR(double r)
+{
+    cylinderR = r;
     updateGL();
 }

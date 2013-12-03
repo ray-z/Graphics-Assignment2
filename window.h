@@ -59,6 +59,20 @@ private slots:
     void disablePtMode();
     // Send t to widget
     void moveFrame(int i);
+    // Show Frenet Frame
+    void showFrame(bool isToggled);
+    // Show Cube
+    void showCube(bool isToggled);
+    // Show Cylinder
+    void showCylinder(bool isToggled);
+
+    // enable/disable cube and cylinder
+    void enableChkbox();
+    void disableChkbox();
+
+    // Send cylinder radius
+    void setRadius(double r);
+
 protected:
     void resizeEvent(QResizeEvent * );
 };

@@ -23,6 +23,7 @@ Window::Window(QWidget *parent):QDialog(parent)
     //Setup application interface. Creates all the required components and sliders.
     setupUi(this);
     disablePtMode();
+    disableChkbox();
     //We need to attach our m_glWidget to glWidgetArea
     //All our drawings will be on glWidgetArea
     glWidgetArea->setWidget(m_glWidget);
@@ -113,7 +114,7 @@ void Window::rightView()
 
 void Window::ctrlCamera()
 {
-    m_glWidget->setMouseMode(0);
+    m_glWidget->setPerspectiveView();
 }
 
 void Window::addPt()
@@ -133,7 +134,7 @@ void Window::deletePt()
 
 void Window::enablePtMode()
 {
-    this->rb_ctrlCamera->setEnabled(true);
+
     this->rb_addPt->setEnabled(true);
     this->rb_movePt->setEnabled(true);
     this->rb_deletePt->setEnabled(true);
@@ -141,15 +142,55 @@ void Window::enablePtMode()
 
 void Window::disablePtMode()
 {
-    this->rb_ctrlCamera->setEnabled(false);
     this->rb_addPt->setEnabled(false);
     this->rb_movePt->setEnabled(false);
     this->rb_deletePt->setEnabled(false);
-
     ctrlCamera();
 }
 
 void Window::moveFrame(int i)
 {
     m_glWidget->setFramePos(i/100.0);
+}
+
+void Window::showFrame(bool isToggled)
+{
+    if(isToggled) enableChkbox();
+    else disableChkbox();
+    m_glWidget->showFrame(isToggled);
+}
+
+void Window::showCube(bool isToggled)
+{
+    m_glWidget->showCube(isToggled);
+}
+
+void Window::showCylinder(bool isToggled)
+{
+    m_glWidget->showCylinder(isToggled);
+}
+
+void Window::setRadius(double r)
+{
+    m_glWidget->setCylinderR(r);
+}
+
+void Window::enableChkbox()
+{
+    this->chkbox_cube->setEnabled(true);
+    this->chkbox_cylinder->setEnabled(true);
+    this->slider_t->setEnabled(true);
+    this->spin_Radius->setEnabled(true);
+}
+
+void Window::disableChkbox()
+{
+    this->chkbox_cube->setEnabled(false);
+    this->chkbox_cylinder->setEnabled(false);
+    this->slider_t->setEnabled(false);
+    this->spin_Radius->setEnabled(false);
+
+    this->chkbox_cube->setChecked(false);
+    this->chkbox_cylinder->setChecked(false);
+
 }

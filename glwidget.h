@@ -60,8 +60,16 @@ public:
     // Different mouse mode
     void setMouseMode(int i);
 
+    // Show Frame
+    void showFrame(bool isToggled);
+    // Show Cube
+    void showCube(bool isToggled);
+    // Show Cylinder
+    void showCylinder(bool isToggled);
     // Set t for Frame
     void setFramePos(double t);
+    // Set r for Cylinder
+    void setCylinderR(double r);
 
 protected:
     //Initialize the OpenGL Graphics Engine
@@ -158,10 +166,16 @@ private:
     int selectedPoint;
 
     // These two decide frame position
-    int startPoint;
-    double tForFrame;
+    //int startPoint;
+    //double tForFrame;
+    bool isFrame;
+    bool isCube;
+    bool isCylinder;
     // set look to
     void setLookTo(double x, double y, double z);
+
+    // Store cylinder radius
+    double cylinderR;
 };
 
 
